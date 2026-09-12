@@ -11,6 +11,7 @@ import { Project } from '../types';
 import { fallbackProjects, studentProfile } from '../data/portfolioData';
 import { ProjectCard } from './ProjectCard';
 import { ProjectCardSkeleton } from './ProjectCardSkeleton';
+import { playUiClick, playUiPing, playUiPop } from '../utils/audioFeedback';
 
 export const ProjectGallery: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>(fallbackProjects);
@@ -155,7 +156,10 @@ export const ProjectGallery: React.FC = () => {
 
             <button
               type="button"
-              onClick={fetchGitHubRepos}
+              onClick={() => {
+                playUiPing();
+                fetchGitHubRepos();
+              }}
               disabled={loading}
               id="refresh-github-repos-btn"
               className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
@@ -175,7 +179,10 @@ export const ProjectGallery: React.FC = () => {
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => setActiveCategory(cat.id)}
+                onClick={() => {
+                  playUiPop();
+                  setActiveCategory(cat.id);
+                }}
                 id={`filter-category-${cat.id}`}
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
                   activeCategory === cat.id
@@ -202,8 +209,11 @@ export const ProjectGallery: React.FC = () => {
             {searchQuery && (
               <button
                 type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-zinc-500 hover:text-white"
+                onClick={() => {
+                  playUiClick();
+                  setSearchQuery('');
+                }}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-zinc-500 hover:text-white cursor-pointer"
               >
                 ✕
               </button>

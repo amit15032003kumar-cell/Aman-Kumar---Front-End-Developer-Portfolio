@@ -11,6 +11,7 @@ import {
   VolumeX
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
+import { playUiClick, playUiPing } from '../utils/audioFeedback';
 
 interface DeveloperStatusBarProps {
   onOpenArcade?: () => void;
@@ -103,7 +104,10 @@ export const DeveloperStatusBar: React.FC<DeveloperStatusBarProps> = ({
 
             <button
               type="button"
-              onClick={scrollToArcade}
+              onClick={() => {
+                playUiPing();
+                scrollToArcade();
+              }}
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-900 hover:bg-zinc-800 active:bg-zinc-700 border border-zinc-750 text-zinc-200 hover:text-white transition-colors cursor-pointer text-[11px]"
               title="Jump to Byte Runner arcade mini-game"
             >
@@ -114,7 +118,10 @@ export const DeveloperStatusBar: React.FC<DeveloperStatusBarProps> = ({
             {onToggleArcadeSound && (
               <button
                 type="button"
-                onClick={onToggleArcadeSound}
+                onClick={() => {
+                  playUiClick();
+                  onToggleArcadeSound();
+                }}
                 id="statusbar-arcade-sound-btn"
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-md border text-[11px] font-mono transition-colors cursor-pointer ${
                   arcadeSoundEnabled

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
 import { LanyardBadge } from './LanyardBadge';
+import { playUiClick, playUiPing } from '../utils/audioFeedback';
 
 interface HeroProps {
   onExploreProjects: () => void;
@@ -145,7 +146,10 @@ export const Hero: React.FC<HeroProps> = ({
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 type="button"
-                onClick={onExploreProjects}
+                onClick={() => {
+                  playUiPing();
+                  onExploreProjects();
+                }}
                 id="hero-explore-projects-btn"
                 className="px-5 py-2.5 rounded-lg font-semibold text-xs bg-white hover:bg-zinc-200 text-black flex items-center gap-2 transition-colors cursor-pointer"
               >
@@ -155,7 +159,10 @@ export const Hero: React.FC<HeroProps> = ({
 
               <button
                 type="button"
-                onClick={() => onToggleLanyard(!isLanyardExpanded)}
+                onClick={() => {
+                  playUiClick();
+                  onToggleLanyard(!isLanyardExpanded);
+                }}
                 id="hero-toggle-lanyard-btn"
                 className="px-4 py-2.5 rounded-lg font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 hover:border-zinc-700 flex items-center gap-2 transition-colors cursor-pointer"
               >
@@ -167,6 +174,7 @@ export const Hero: React.FC<HeroProps> = ({
                 href={studentProfile.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => playUiClick()}
                 id="hero-github-btn"
                 className="px-4 py-2.5 rounded-lg font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 flex items-center gap-2 transition-colors"
               >

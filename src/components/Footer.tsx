@@ -9,6 +9,7 @@ import {
   MapPin
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
+import { playUiClick, playUiPing } from '../utils/audioFeedback';
 
 interface FooterProps {
   onScrollToTop: () => void;
@@ -61,41 +62,68 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenLanyard }) 
             </span>
             <ul className="space-y-1.5 text-xs text-zinc-400">
               <li>
-                <a href="#academic-id" className="hover:text-white transition-colors">
+                <a
+                  href="#academic-id"
+                  onClick={() => playUiPing()}
+                  className="hover:text-white transition-colors"
+                >
                   Student ID Card
                 </a>
               </li>
               <li>
                 <button
                   type="button"
-                  onClick={onOpenLanyard}
+                  onClick={() => {
+                    playUiClick();
+                    onOpenLanyard();
+                  }}
                   className="hover:text-white transition-colors text-left cursor-pointer"
                 >
                   Pull ID Badge
                 </button>
               </li>
               <li>
-                <a href="#projects" className="hover:text-white transition-colors">
+                <a
+                  href="#projects"
+                  onClick={() => playUiPing()}
+                  className="hover:text-white transition-colors"
+                >
                   GitHub Repositories
                 </a>
               </li>
               <li>
-                <a href="#skills" className="hover:text-white transition-colors">
+                <a
+                  href="#skills"
+                  onClick={() => playUiPing()}
+                  className="hover:text-white transition-colors"
+                >
                   Tech Stack
                 </a>
               </li>
               <li>
-                <a href="#arcade" className="hover:text-white transition-colors">
+                <a
+                  href="#arcade"
+                  onClick={() => playUiPing()}
+                  className="hover:text-white transition-colors"
+                >
                   Terminal Arcade
                 </a>
               </li>
               <li>
-                <a href="#education" className="hover:text-white transition-colors">
+                <a
+                  href="#education"
+                  onClick={() => playUiPing()}
+                  className="hover:text-white transition-colors"
+                >
                   Education
                 </a>
               </li>
               <li>
-                <a href="#contact" className="hover:text-white transition-colors">
+                <a
+                  href="#contact"
+                  onClick={() => playUiPing()}
+                  className="hover:text-white transition-colors"
+                >
                   Contact
                 </a>
               </li>
@@ -150,7 +178,10 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenLanyard }) 
             <div className="pt-3">
               <button
                 type="button"
-                onClick={onScrollToTop}
+                onClick={() => {
+                  playUiClick();
+                  onScrollToTop();
+                }}
                 id="footer-back-to-top-btn"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs transition-colors cursor-pointer"
               >

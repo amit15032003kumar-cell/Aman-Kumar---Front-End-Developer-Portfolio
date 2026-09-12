@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
 import { ThemeMode } from '../types';
+import { playUiClick, playUiPing } from '../utils/audioFeedback';
 
 interface NavbarProps {
   onTriggerLanyardPull?: () => void;
@@ -65,6 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Simple Brand */}
         <a
           href="#academic-id"
+          onClick={() => playUiClick()}
           className="flex items-center gap-2.5 text-zinc-100 hover:text-white transition-colors"
           id="navbar-brand-link"
         >
@@ -87,6 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <a
               key={link.name}
               href={link.href}
+              onClick={() => playUiPing()}
               id={`nav-link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
               className="hover:text-white transition-colors"
             >
@@ -100,7 +103,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Global Arcade Sound Toggle Button */}
           <button
             type="button"
-            onClick={onToggleArcadeSound}
+            onClick={() => {
+              playUiClick();
+              onToggleArcadeSound();
+            }}
             id="navbar-arcade-sound-btn"
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer border ${
               arcadeSoundEnabled
@@ -126,7 +132,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Theme Toggle Button */}
           <button
             type="button"
-            onClick={onToggleTheme}
+            onClick={() => {
+              playUiClick();
+              onToggleTheme();
+            }}
             id="theme-toggle-btn"
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
             title={`Switch to ${theme === 'deep-black' ? 'Slate Gray mode' : 'Deep Black mode'}`}
@@ -139,7 +148,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             type="button"
-            onClick={onTriggerLanyardPull}
+            onClick={() => {
+              playUiClick();
+              onTriggerLanyardPull?.();
+            }}
             id="navbar-lanyard-toggle-btn"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 hover:border-zinc-700 transition-all cursor-pointer"
           >
@@ -151,6 +163,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             href={studentProfile.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => playUiClick()}
             id="navbar-github-link"
             className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
             title="GitHub Profile"
@@ -162,6 +175,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             href={studentProfile.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => playUiClick()}
             id="navbar-instagram-link"
             className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
             title="Instagram (@darky__here)"
@@ -173,6 +187,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             href={studentProfile.linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => playUiClick()}
             id="navbar-linkedin-link"
             className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
             title="LinkedIn (Aman Kumar)"
@@ -182,6 +197,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <a
             href="#contact"
+            onClick={() => playUiPing()}
             id="navbar-contact-cta"
             className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white hover:bg-zinc-200 text-black transition-colors"
           >
@@ -192,7 +208,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Mobile menu toggle */}
         <button
           type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          onClick={() => {
+            playUiClick();
+            setMobileMenuOpen(!mobileMenuOpen);
+          }}
           id="navbar-mobile-toggle"
           className="md:hidden p-1.5 rounded-md text-zinc-400 hover:text-white bg-zinc-900 border border-zinc-800"
           aria-label="Toggle Menu"
@@ -211,7 +230,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <a
               key={link.name}
               href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                playUiPing();
+                setMobileMenuOpen(false);
+              }}
               className="block px-3 py-2 rounded-md text-sm text-zinc-300 hover:text-white hover:bg-zinc-900"
             >
               {link.name}
@@ -221,7 +243,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Mobile Sound Toggle */}
             <button
               type="button"
-              onClick={onToggleArcadeSound}
+              onClick={() => {
+                playUiClick();
+                onToggleArcadeSound();
+              }}
               id="mobile-arcade-sound-btn"
               className="flex items-center gap-1.5 text-xs text-zinc-300 py-2 px-3 rounded-md bg-zinc-900 border border-zinc-800 justify-center cursor-pointer col-span-2 sm:col-span-1"
             >

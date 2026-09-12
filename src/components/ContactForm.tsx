@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import confetti from 'canvas-confetti';
 import {
   Mail,
   Send,
@@ -9,10 +10,12 @@ import {
   Instagram,
   Linkedin,
   MapPin,
-  ArrowUpRight
+  ArrowUpRight,
+  Sparkles
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
 import { ContactFormData } from '../types';
+import { playUiClick, playUiPing } from '../utils/audioFeedback';
 
 export const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -35,10 +38,60 @@ export const ContactForm: React.FC = () => {
     if (validationError) setValidationError(null);
   };
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(studentProfile.email);
+  const handleCopyEmail = (e?: React.MouseEvent) => {
+    try {
+      navigator.clipboard.writeText(studentProfile.email);
+    } catch {
+      // Fallback
+    }
+
     setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2500);
+    playUiPing(2150, 0.06);
+
+    // Subtle tactile confetti burst from button origin
+    try {
+      let originX = 0.5;
+      let originY = 0.5;
+
+      if (e && e.clientX && e.clientY) {
+        originX = Math.max(0.05, Math.min(0.95, e.clientX / window.innerWidth));
+        originY = Math.max(0.05, Math.min(0.95, e.clientY / window.innerHeight));
+      }
+
+      // First burst: Crisp micro-stars and silver circles
+      confetti({
+        particleCount: 38,
+        spread: 55,
+        startVelocity: 26,
+        origin: { x: originX, y: originY },
+        colors: ['#ffffff', '#f4f4f5', '#e4e4e7', '#a1a1aa', '#71717a', '#38bdf8'],
+        ticks: 140,
+        gravity: 1.2,
+        scalar: 0.8,
+        shapes: ['circle', 'square'],
+        disableForReducedMotion: true,
+      });
+
+      // Second gentle flutter: Soft delayed particles
+      setTimeout(() => {
+        confetti({
+          particleCount: 16,
+          angle: 90,
+          spread: 45,
+          startVelocity: 18,
+          origin: { x: originX, y: Math.max(0, originY - 0.02) },
+          colors: ['#ffffff', '#e4e4e7', '#a1a1aa'],
+          ticks: 120,
+          gravity: 1.0,
+          scalar: 0.7,
+          disableForReducedMotion: true,
+        });
+      }, 70);
+    } catch {
+      // Graceful fallback
+    }
+
+    setTimeout(() => setCopiedEmail(false), 2600);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -116,11 +169,19 @@ export const ContactForm: React.FC = () => {
               </div>
 
               {/* Email channel */}
-              <div className="p-3 rounded-lg bg-black border border-zinc-800 space-y-1.5">
-                <span className="text-[10px] font-mono text-zinc-400 uppercase block">
-                  Email
-                </span>
-                <div className="flex items-center justify-between gap-2">
+              <div className="p-3.5 rounded-lg bg-black border border-zinc-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">
+                    Direct Email
+                  </span>
+                  {copiedEmail && (
+                    <span className="text-[10px] font-mono text-zinc-300 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-white" />
+                      Copied!
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                   <div className="flex items-center gap-2 min-w-0">
                     <Mail className="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" />
                     <span className="text-xs font-mono text-zinc-200 truncate select-all">
@@ -129,19 +190,24 @@ export const ContactForm: React.FC = () => {
                   </div>
                   <button
                     type="button"
-                    onClick={handleCopyEmail}
-                    className="p-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors flex items-center gap-1 text-xs cursor-pointer flex-shrink-0"
-                    title="Copy email"
+                    id="contact-copy-email-btn"
+                    onClick={(e) => handleCopyEmail(e)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer flex-shrink-0 border ${
+                      copiedEmail
+                        ? 'bg-white text-black border-white shadow-sm'
+                        : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-200 hover:text-white border-zinc-750 hover:border-zinc-600 active:scale-95'
+                    }`}
+                    title="Copy Aman's email to clipboard"
                   >
                     {copiedEmail ? (
                       <>
-                        <Check className="w-3 h-3 text-white" />
-                        <span className="text-[11px] text-white font-mono font-medium">Copied</span>
+                        <Check className="w-3.5 h-3.5 text-black stroke-[3]" />
+                        <span>Email Copied!</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3 h-3" />
-                        <span className="text-[11px] font-mono">Copy</span>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy Email</span>
                       </>
                     )}
                   </button>
@@ -264,6 +330,30 @@ export const ContactForm: React.FC = () => {
 
                     <button
                       type="button"
+                      id="success-copy-email-btn"
+                      onClick={(e) => handleCopyEmail(e)}
+                      className={`w-full sm:w-auto px-4 py-2 rounded-lg text-xs font-mono border transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        copiedEmail
+                          ? 'bg-zinc-100 text-black border-white'
+                          : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border-zinc-700 hover:border-zinc-600'
+                      }`}
+                      title="Copy email to clipboard"
+                    >
+                      {copiedEmail ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-black stroke-[3]" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5 text-zinc-400" />
+                          <span>Copy Email</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
                       onClick={resetForm}
                       className="w-full sm:w-auto px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-mono border border-zinc-800 transition-colors"
                     >
@@ -274,10 +364,33 @@ export const ContactForm: React.FC = () => {
               ) : (
                 /* Form */
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="border-b border-zinc-900 pb-3 mb-1">
+                  <div className="border-b border-zinc-900 pb-3 mb-1 flex items-center justify-between gap-2">
                     <h3 className="text-base font-semibold text-white">
                       Leave a Message
                     </h3>
+                    <button
+                      type="button"
+                      id="form-quick-copy-email-btn"
+                      onClick={(e) => handleCopyEmail(e)}
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono transition-all cursor-pointer border ${
+                        copiedEmail
+                          ? 'bg-white text-black border-white shadow-sm'
+                          : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border-zinc-800 hover:border-zinc-700 active:scale-95'
+                      }`}
+                      title="Quickly copy Aman's email to clipboard"
+                    >
+                      {copiedEmail ? (
+                        <>
+                          <Check className="w-3 h-3 text-black stroke-[3]" />
+                          <span className="font-semibold">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3 h-3 text-zinc-400" />
+                          <span>Copy Email</span>
+                        </>
+                      )}
+                    </button>
                   </div>
 
                   {validationError && (

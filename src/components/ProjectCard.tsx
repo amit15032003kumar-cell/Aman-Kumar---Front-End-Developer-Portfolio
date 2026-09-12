@@ -7,6 +7,7 @@ import {
   CheckCircle
 } from 'lucide-react';
 import { Project } from '../types';
+import { playUiClick, playUiPing } from '../utils/audioFeedback';
 
 interface ProjectCardProps {
   project: Project;
@@ -16,6 +17,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <article
       id={`project-card-${project.name}`}
+      onClick={() => playUiClick(0.025)}
       className="w-full rounded-xl bg-zinc-950 border border-zinc-850 hover:border-zinc-700 p-5 flex flex-col justify-between shadow-xl shadow-black/60 transition-colors text-left relative overflow-hidden group"
     >
       <div className="space-y-3.5">
@@ -85,7 +87,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           {(project.topics || []).slice(0, 4).map((topic) => (
             <span
               key={topic}
-              className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400"
+              onClick={(e) => {
+                e.stopPropagation();
+                playUiClick();
+              }}
+              className="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-[10px] font-mono text-zinc-400 cursor-default"
             >
               #{topic}
             </span>
@@ -99,6 +105,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           href={project.repoUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={(e) => {
+            e.stopPropagation();
+            playUiClick();
+          }}
           id={`project-github-btn-${project.name}`}
           className="py-2 px-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-200 hover:text-white font-medium text-xs flex items-center justify-center gap-1.5 border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
           title={`View ${project.name} on GitHub`}
@@ -111,6 +121,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           href={project.liveUrl || project.repoUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={(e) => {
+            e.stopPropagation();
+            playUiPing();
+          }}
           id={`project-live-btn-${project.name}`}
           className="py-2 px-3 rounded-lg bg-white hover:bg-zinc-200 text-black font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-sm cursor-pointer"
           title={`Open live preview for ${project.title || project.name}`}
