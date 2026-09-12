@@ -141,7 +141,7 @@ export const ProjectGallery: React.FC = () => {
             </h2>
             <p className="text-sm text-zinc-400 max-w-xl">
               Real repositories synced from <a href={studentProfile.githubUrl} target="_blank" rel="noreferrer" className="text-zinc-200 hover:underline font-mono">@{studentProfile.githubUsername}</a>. 
-              Hover cards for interactive spotlight glow, or tap to inspect full architecture details.
+              Explore codebase repositories, key architectural highlights, and direct live previews.
             </p>
           </div>
 
@@ -211,7 +211,7 @@ export const ProjectGallery: React.FC = () => {
           </div>
         </div>
 
-        {/* 3D Animated Flipping Cards Grid or Skeleton Loader */}
+        {/* Project Cards Grid or Skeleton Loader */}
         {loading ? (
           <div
             id="projects-grid-skeleton"

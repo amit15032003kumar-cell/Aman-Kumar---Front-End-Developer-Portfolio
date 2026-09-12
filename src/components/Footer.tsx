@@ -85,6 +85,11 @@ export const Footer: React.FC<FooterProps> = ({ onScrollToTop, onOpenLanyard }) 
                 </a>
               </li>
               <li>
+                <a href="#arcade" className="hover:text-white transition-colors">
+                  Terminal Arcade
+                </a>
+              </li>
+              <li>
                 <a href="#education" className="hover:text-white transition-colors">
                   Education
                 </a>

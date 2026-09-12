@@ -8,7 +8,9 @@ import {
   Menu,
   X,
   ArrowDown,
-  Contrast
+  Contrast,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
 import { ThemeMode } from '../types';
@@ -18,13 +20,17 @@ interface NavbarProps {
   isLanyardExpanded?: boolean;
   theme: ThemeMode;
   onToggleTheme: () => void;
+  arcadeSoundEnabled: boolean;
+  onToggleArcadeSound: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onTriggerLanyardPull,
   isLanyardExpanded,
   theme,
-  onToggleTheme
+  onToggleTheme,
+  arcadeSoundEnabled,
+  onToggleArcadeSound
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -41,6 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { name: 'College ID', href: '#academic-id' },
     { name: 'Projects', href: '#projects' },
     { name: 'Skills', href: '#skills' },
+    { name: 'Arcade', href: '#arcade' },
     { name: 'Education', href: '#education' },
     { name: 'Contact', href: '#contact' },
   ];
@@ -90,6 +97,32 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right quick actions */}
         <div className="hidden sm:flex items-center gap-2">
+          {/* Global Arcade Sound Toggle Button */}
+          <button
+            type="button"
+            onClick={onToggleArcadeSound}
+            id="navbar-arcade-sound-btn"
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer border ${
+              arcadeSoundEnabled
+                ? 'bg-zinc-900 hover:bg-zinc-800 text-zinc-200 hover:text-white border-zinc-750'
+                : 'bg-zinc-950 hover:bg-zinc-900 text-zinc-500 hover:text-zinc-300 border-zinc-850'
+            }`}
+            title={arcadeSoundEnabled ? 'Global Game Audio: ON (Click to Mute)' : 'Global Game Audio: MUTED (Click to Unmute)'}
+            aria-label={arcadeSoundEnabled ? 'Mute Game Audio' : 'Unmute Game Audio'}
+          >
+            {arcadeSoundEnabled ? (
+              <>
+                <Volume2 className="w-3.5 h-3.5 text-zinc-300" />
+                <span className="hidden lg:inline text-[11px]">Sound On</span>
+              </>
+            ) : (
+              <>
+                <VolumeX className="w-3.5 h-3.5 text-zinc-500" />
+                <span className="hidden lg:inline text-[11px]">Muted</span>
+              </>
+            )}
+          </button>
+
           {/* Theme Toggle Button */}
           <button
             type="button"
@@ -185,6 +218,26 @@ export const Navbar: React.FC<NavbarProps> = ({
             </a>
           ))}
           <div className="pt-2 border-t border-zinc-900 grid grid-cols-2 gap-2">
+            {/* Mobile Sound Toggle */}
+            <button
+              type="button"
+              onClick={onToggleArcadeSound}
+              id="mobile-arcade-sound-btn"
+              className="flex items-center gap-1.5 text-xs text-zinc-300 py-2 px-3 rounded-md bg-zinc-900 border border-zinc-800 justify-center cursor-pointer col-span-2 sm:col-span-1"
+            >
+              {arcadeSoundEnabled ? (
+                <>
+                  <Volume2 className="w-3.5 h-3.5 text-zinc-300" />
+                  <span>Arcade Audio: On</span>
+                </>
+              ) : (
+                <>
+                  <VolumeX className="w-3.5 h-3.5 text-zinc-500" />
+                  <span>Arcade Audio: Muted</span>
+                </>
+              )}
+            </button>
+
             {/* Mobile Theme Toggle */}
             <button
               type="button"
