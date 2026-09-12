@@ -6,10 +6,9 @@ import {
   Copy,
   Check,
   Github,
+  Instagram,
+  Linkedin,
   MapPin,
-  Sparkles,
-  Phone,
-  MessageSquare,
   ArrowUpRight
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
@@ -46,24 +45,22 @@ export const ContactForm: React.FC = () => {
     e.preventDefault();
 
     if (!formData.name.trim()) {
-      setValidationError('Please provide your name.');
+      setValidationError('Please enter your name.');
       return;
     }
     if (!formData.email.trim() || !formData.email.includes('@')) {
-      setValidationError('Please provide a valid email address.');
+      setValidationError('Please enter a valid email.');
       return;
     }
     if (!formData.message.trim()) {
-      setValidationError('Please enter a brief message describing your inquiry.');
+      setValidationError('Please write a short message.');
       return;
     }
 
     setStatus('submitting');
-
-    // Simulate reliable form submission & offer immediate mailto launcher
     setTimeout(() => {
       setStatus('success');
-    }, 900);
+    }, 600);
   };
 
   const resetForm = () => {
@@ -77,81 +74,74 @@ export const ContactForm: React.FC = () => {
     setStatus('idle');
   };
 
-  // Compose dynamic mailto URL
   const mailtoUrl = `mailto:${studentProfile.email}?subject=${encodeURIComponent(
-    `[${formData.inquiryType.toUpperCase()}] ${formData.subject || 'Portfolio Inquiry'} - from ${formData.name || 'Website Visitor'}`
+    `[${formData.inquiryType.toUpperCase()}] ${formData.subject || 'Portfolio Inquiry'} - ${formData.name}`
   )}&body=${encodeURIComponent(
-    `Hello Aman,\n\nName: ${formData.name}\nEmail: ${formData.email}\nInquiry Type: ${formData.inquiryType}\n\nMessage:\n${formData.message}\n\nSent via your portfolio website.`
+    `Hi Aman,\n\nName: ${formData.name}\nEmail: ${formData.email}\nTopic: ${formData.inquiryType}\n\nMessage:\n${formData.message}\n`
   )}`;
 
   return (
-    <section id="contact" className="py-16 sm:py-24 bg-[#090b10] relative">
-      {/* Background glow */}
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="contact" className="py-16 sm:py-20 bg-black border-b border-zinc-900 relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-xs font-mono text-cyan-300 font-semibold">
-            <Mail className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Initiate Collaboration</span>
+        <div className="text-left max-w-2xl space-y-2 mb-10 pb-6 border-b border-zinc-800">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+            <Mail className="w-3.5 h-3.5 text-zinc-400" />
+            <span>Contact</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-            Get In Touch with Aman Kumar
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            Get in Touch
           </h2>
-          <p className="text-sm sm:text-base text-slate-400">
-            Seeking front-end developer internships, project collaborations, or curious about 
-            code repositories? Send a direct message or connect via GitHub & Email.
+          <p className="text-sm text-zinc-400">
+            Have an internship opening, a project idea, or a question about my work? Send a direct note or copy my email.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Direct Info & Location Card */}
-          <div className="lg:col-span-5 space-y-5 text-left">
-            
-            {/* Quick Contact Card */}
-            <div className="p-6 rounded-3xl bg-[#0e131d] border border-slate-800 shadow-xl space-y-6">
+          {/* Left Column: Direct Info Card */}
+          <div className="lg:col-span-5 space-y-4 text-left">
+            <div className="p-5 rounded-xl bg-zinc-950 border border-zinc-800 space-y-4">
               <div>
-                <span className="text-xs font-mono uppercase text-cyan-400 font-bold tracking-wider block mb-1">
-                  Direct Inquiries
+                <span className="text-xs font-mono uppercase text-zinc-400 block mb-1">
+                  Direct Channels
                 </span>
-                <h3 className="text-xl font-bold text-white">
-                  Let's Discuss Your Next Web Project
+                <h3 className="text-lg font-bold text-white">
+                  Aman Kumar
                 </h3>
-                <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
-                  I typically respond within 24 hours. Open to remote internships, full-time junior front-end roles, and freelance UI development.
+                <p className="text-xs text-zinc-400 mt-1">
+                  BCA 2nd Year, G.J. College Rambagh Bihta
                 </p>
               </div>
 
               {/* Email channel */}
-              <div className="p-4 rounded-2xl bg-[#090c13] border border-slate-800/90 space-y-2">
-                <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
-                  Official Email Address
+              <div className="p-3 rounded-lg bg-black border border-zinc-800 space-y-1.5">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase block">
+                  Email
                 </span>
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <Mail className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm font-mono text-slate-200 truncate select-all">
+                    <Mail className="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" />
+                    <span className="text-xs font-mono text-zinc-200 truncate select-all">
                       {studentProfile.email}
                     </span>
                   </div>
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 transition-colors flex items-center gap-1 text-xs cursor-pointer flex-shrink-0"
-                    title="Copy email address"
+                    className="p-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition-colors flex items-center gap-1 text-xs cursor-pointer flex-shrink-0"
+                    title="Copy email"
                   >
                     {copiedEmail ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-[11px] text-emerald-400">Copied</span>
+                        <Check className="w-3 h-3 text-white" />
+                        <span className="text-[11px] text-white font-mono font-medium">Copied</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5" />
-                        <span className="text-[11px]">Copy</span>
+                        <Copy className="w-3 h-3" />
+                        <span className="text-[11px] font-mono">Copy</span>
                       </>
                     )}
                   </button>
@@ -159,14 +149,14 @@ export const ContactForm: React.FC = () => {
               </div>
 
               {/* GitHub channel */}
-              <div className="p-4 rounded-2xl bg-[#090c13] border border-slate-800/90 space-y-2">
-                <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
+              <div className="p-3 rounded-lg bg-black border border-zinc-800 space-y-1.5">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase block">
                   GitHub Profile
                 </span>
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <Github className="w-4 h-4 text-slate-300 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm font-mono text-slate-200 truncate">
+                    <Github className="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" />
+                    <span className="text-xs font-mono text-zinc-200 truncate">
                       @{studentProfile.githubUsername}
                     </span>
                   </div>
@@ -174,98 +164,132 @@ export const ContactForm: React.FC = () => {
                     href={studentProfile.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors flex items-center gap-1 text-xs flex-shrink-0"
+                    className="p-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-colors flex items-center gap-1 text-xs flex-shrink-0"
                   >
-                    <span className="text-[11px]">Profile</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                    <span className="text-[11px] font-mono">Profile</span>
+                    <ArrowUpRight className="w-3 h-3" />
                   </a>
                 </div>
               </div>
 
-              {/* Academic Location Info */}
-              <div className="p-4 rounded-2xl bg-[#090c13] border border-slate-800/90 space-y-2">
-                <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
-                  Location & Residence
+              {/* Instagram channel */}
+              <div className="p-3 rounded-lg bg-black border border-zinc-800 space-y-1.5">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase block">
+                  Instagram
                 </span>
-                <div className="flex items-start gap-2 text-xs text-slate-300">
-                  <MapPin className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold text-white block">Bihta, Patna, Bihar, India</span>
-                    <span className="text-slate-400 text-[11px]">Student at G.J. College Rambagh Bihta</span>
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Instagram className="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" />
+                    <span className="text-xs font-mono text-zinc-200 truncate">
+                      @{studentProfile.instagramUsername}
+                    </span>
                   </div>
+                  <a
+                    href={studentProfile.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-colors flex items-center gap-1 text-xs flex-shrink-0"
+                  >
+                    <span className="text-[11px] font-mono">Open</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
                 </div>
               </div>
 
-            </div>
+              {/* LinkedIn channel */}
+              <div className="p-3 rounded-lg bg-black border border-zinc-800 space-y-1.5">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase block">
+                  LinkedIn
+                </span>
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Linkedin className="w-3.5 h-3.5 text-zinc-400 flex-shrink-0" />
+                    <span className="text-xs font-mono text-zinc-200 truncate">
+                      {studentProfile.linkedinUsername}
+                    </span>
+                  </div>
+                  <a
+                    href={studentProfile.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-colors flex items-center gap-1 text-xs flex-shrink-0"
+                  >
+                    <span className="text-[11px] font-mono">Connect</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
 
-            {/* Quick response commitment */}
-            <div className="p-4 rounded-2xl bg-cyan-950/30 border border-cyan-500/20 text-xs text-cyan-300 flex items-center gap-3">
-              <Sparkles className="w-5 h-5 text-cyan-400 flex-shrink-0" />
-              <span>
-                Committed to delivering clean code, clear communication, and dedicated craftsmanship for every project.
-              </span>
+              {/* Location */}
+              <div className="p-3 rounded-lg bg-black border border-zinc-800 space-y-1">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase block">
+                  Location
+                </span>
+                <div className="flex items-start gap-2 text-xs text-zinc-300">
+                  <MapPin className="w-3.5 h-3.5 text-zinc-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-medium text-white block">Bihta, Patna, Bihar, India</span>
+                    <span className="text-zinc-400 text-[11px]">G.J. College Rambagh Bihta</span>
+                  </div>
+                </div>
+              </div>
             </div>
-
           </div>
 
-          {/* Right Column: Integrated Interactive Form */}
+          {/* Right Column: Form */}
           <div className="lg:col-span-7">
-            <div className="p-6 sm:p-8 rounded-3xl bg-[#0c1017] border border-slate-800 shadow-2xl relative text-left">
+            <div className="p-6 rounded-xl bg-zinc-950 border border-zinc-800 text-left">
               
               {status === 'success' ? (
-                /* Success State Screen */
-                <div className="py-12 px-4 text-center space-y-4">
-                  <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/10">
-                    <CheckCircle2 className="w-8 h-8" />
+                /* Success State */
+                <div className="py-10 px-4 text-center space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-zinc-900 border border-zinc-700 text-zinc-200 flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-6 h-6" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white">
-                    Thank You, {formData.name || 'Friend'}!
+                  <h3 className="text-lg font-bold text-white">
+                    Message Ready
                   </h3>
-                  <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
-                    Your inquiry has been formulated successfully! You can also launch your email client directly below to send this copy to <span className="font-mono text-cyan-300">amit15032003kumar@gmail.com</span>.
+                  <p className="text-xs text-zinc-400 max-w-sm mx-auto leading-relaxed">
+                    You can click below to open your email client and send this directly to <span className="font-mono text-zinc-200">{studentProfile.email}</span>.
                   </p>
 
-                  <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-2">
                     <a
                       href={mailtoUrl}
-                      className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md shadow-cyan-500/25"
+                      className="w-full sm:w-auto px-5 py-2 rounded-lg bg-white text-black font-semibold text-xs flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors"
                     >
-                      <Mail className="w-4 h-4" />
-                      <span>Launch Default Mail Client</span>
+                      <Mail className="w-3.5 h-3.5" />
+                      <span>Open Mail Client</span>
                     </a>
 
                     <button
                       type="button"
                       onClick={resetForm}
-                      className="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition-colors"
+                      className="w-full sm:w-auto px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-mono border border-zinc-800 transition-colors"
                     >
-                      Send Another Message
+                      Write Another
                     </button>
                   </div>
                 </div>
               ) : (
-                /* Main Interactive Form */
+                /* Form */
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="border-b border-slate-800 pb-4 mb-2">
-                    <h3 className="text-xl font-bold text-white">
-                      Send a Message to Aman
+                  <div className="border-b border-zinc-900 pb-3 mb-1">
+                    <h3 className="text-base font-semibold text-white">
+                      Leave a Message
                     </h3>
-                    <p className="text-xs text-slate-400 mt-1">
-                      Fill out the details below to initiate direct communication.
-                    </p>
                   </div>
 
                   {validationError && (
-                    <div className="p-3 rounded-xl bg-rose-950/50 border border-rose-500/40 text-rose-300 text-xs font-medium">
-                      ⚠️ {validationError}
+                    <div className="p-2.5 rounded-lg bg-zinc-900 border border-red-900/60 text-red-300 text-xs">
+                      {validationError}
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Name */}
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-name" className="text-xs font-mono uppercase text-slate-400 font-medium">
-                        Your Full Name <span className="text-cyan-400">*</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label htmlFor="contact-name" className="text-[11px] font-mono uppercase text-zinc-400 block">
+                        Your Name <span className="text-zinc-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -274,14 +298,13 @@ export const ContactForm: React.FC = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="e.g. Rahul Sharma"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyan-500 focus:outline-none text-sm text-white placeholder-slate-600 transition-colors"
+                        className="w-full px-3 py-2 rounded-lg bg-black border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-white placeholder-zinc-600 transition-colors"
                       />
                     </div>
 
-                    {/* Email */}
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-email" className="text-xs font-mono uppercase text-slate-400 font-medium">
-                        Email Address <span className="text-cyan-400">*</span>
+                    <div className="space-y-1">
+                      <label htmlFor="contact-email" className="text-[11px] font-mono uppercase text-zinc-400 block">
+                        Email Address <span className="text-zinc-500">*</span>
                       </label>
                       <input
                         type="email"
@@ -289,36 +312,34 @@ export const ContactForm: React.FC = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        placeholder="e.g. rahul@company.com"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyan-500 focus:outline-none text-sm text-white placeholder-slate-600 transition-colors"
+                        placeholder="e.g. rahul@example.com"
+                        className="w-full px-3 py-2 rounded-lg bg-black border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-white placeholder-zinc-600 transition-colors"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {/* Inquiry Type */}
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-inquiry-type" className="text-xs font-mono uppercase text-slate-400 font-medium">
-                        Opportunity / Inquiry Type
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <label htmlFor="contact-inquiry-type" className="text-[11px] font-mono uppercase text-zinc-400 block">
+                        Inquiry Type
                       </label>
                       <select
                         id="contact-inquiry-type"
                         name="inquiryType"
                         value={formData.inquiryType}
                         onChange={handleInputChange}
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyan-500 focus:outline-none text-sm text-white transition-colors cursor-pointer"
+                        className="w-full px-3 py-2 rounded-lg bg-black border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-white transition-colors cursor-pointer"
                       >
                         <option value="internship">Front-End Internship</option>
-                        <option value="job">Full-time Junior Developer Role</option>
+                        <option value="job">Junior Developer Role</option>
                         <option value="freelance">Freelance Web Project</option>
                         <option value="collaboration">Open Source Collaboration</option>
-                        <option value="general">General Networking / Feedback</option>
+                        <option value="general">General Inquiry</option>
                       </select>
                     </div>
 
-                    {/* Subject */}
-                    <div className="space-y-1.5">
-                      <label htmlFor="contact-subject" className="text-xs font-mono uppercase text-slate-400 font-medium">
+                    <div className="space-y-1">
+                      <label htmlFor="contact-subject" className="text-[11px] font-mono uppercase text-zinc-400 block">
                         Subject Line
                       </label>
                       <input
@@ -328,15 +349,14 @@ export const ContactForm: React.FC = () => {
                         value={formData.subject}
                         onChange={handleInputChange}
                         placeholder="e.g. Front-End Opportunity"
-                        className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyan-500 focus:outline-none text-sm text-white placeholder-slate-600 transition-colors"
+                        className="w-full px-3 py-2 rounded-lg bg-black border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-white placeholder-zinc-600 transition-colors"
                       />
                     </div>
                   </div>
 
-                  {/* Message */}
-                  <div className="space-y-1.5">
-                    <label htmlFor="contact-message" className="text-xs font-mono uppercase text-slate-400 font-medium">
-                      Your Message <span className="text-cyan-400">*</span>
+                  <div className="space-y-1">
+                    <label htmlFor="contact-message" className="text-[11px] font-mono uppercase text-zinc-400 block">
+                      Message <span className="text-zinc-500">*</span>
                     </label>
                     <textarea
                       id="contact-message"
@@ -344,38 +364,31 @@ export const ContactForm: React.FC = () => {
                       rows={4}
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder="Hi Aman, I noticed your front-end projects and would like to discuss..."
-                      className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 focus:border-cyan-500 focus:outline-none text-sm text-white placeholder-slate-600 transition-colors resize-none"
+                      placeholder="Hi Aman, I checked out your portfolio and repositories..."
+                      className="w-full px-3 py-2 rounded-lg bg-black border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-white placeholder-zinc-600 transition-colors resize-none"
                     />
                   </div>
 
-                  {/* Submit Button */}
-                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="text-xs text-slate-400 flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                      <span>Direct delivery to Aman's inbox</span>
-                    </div>
+                  <div className="pt-2 flex items-center justify-between gap-4">
+                    <span className="text-[11px] font-mono text-zinc-400">
+                      Delivered to {studentProfile.email}
+                    </span>
 
-                    <div className="flex items-center gap-2 w-full sm:w-auto">
-                      <button
-                        type="submit"
-                        disabled={status === 'submitting'}
-                        id="contact-submit-btn"
-                        className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/35 transition-all cursor-pointer disabled:opacity-50"
-                      >
-                        {status === 'submitting' ? (
-                          <>
-                            <span className="w-3.5 h-3.5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
-                            <span>Sending Message...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Send className="w-3.5 h-3.5" />
-                            <span>Send Message</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
+                    <button
+                      type="submit"
+                      disabled={status === 'submitting'}
+                      id="contact-submit-btn"
+                      className="px-5 py-2 rounded-lg bg-white hover:bg-zinc-200 text-black font-semibold text-xs flex items-center gap-2 transition-colors cursor-pointer disabled:opacity-50"
+                    >
+                      {status === 'submitting' ? (
+                        <span>Sending...</span>
+                      ) : (
+                        <>
+                          <Send className="w-3.5 h-3.5" />
+                          <span>Submit Message</span>
+                        </>
+                      )}
+                    </button>
                   </div>
                 </form>
               )}

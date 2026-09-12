@@ -33,12 +33,83 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #090b10;
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #1f1f1f;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
+  background: #2e2e2e;
+}
+
+/* =========================================
+   Slate Gray (Higher-Contrast) Theme
+   ========================================= */
+.theme-slate-gray {
+  background-color: #0b0f19 !important;
+  color: #f1f5f9 !important;
+}
+
+.theme-slate-gray .bg-black {
+  background-color: #0b0f19 !important;
+}
+
+.theme-slate-gray .bg-zinc-950 {
+  background-color: #111827 !important;
+}
+
+.theme-slate-gray .bg-zinc-900 {
+  background-color: #1e293b !important;
+}
+
+.theme-slate-gray .hover\:bg-zinc-800:hover {
+  background-color: #334155 !important;
+}
+
+.theme-slate-gray .bg-zinc-800 {
+  background-color: #334155 !important;
+}
+
+.theme-slate-gray .border-zinc-900 {
+  border-color: #1e293b !important;
+}
+
+.theme-slate-gray .border-zinc-850,
+.theme-slate-gray .border-zinc-800,
+.theme-slate-gray .border-zinc-800\/80 {
+  border-color: #334155 !important;
+}
+
+.theme-slate-gray .border-zinc-700 {
+  border-color: #475569 !important;
+}
+
+.theme-slate-gray .text-zinc-400 {
+  color: #94a3b8 !important;
+}
+
+.theme-slate-gray .text-zinc-300 {
+  color: #cbd5e1 !important;
+}
+
+.theme-slate-gray .text-zinc-200 {
+  color: #e2e8f0 !important;
+}
+
+.theme-slate-gray ::-webkit-scrollbar-track {
+  background: #0b0f19;
+}
+.theme-slate-gray ::-webkit-scrollbar-thumb {
   background: #334155;
+}
+.theme-slate-gray ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Shimmer animation for skeleton loaders */
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }

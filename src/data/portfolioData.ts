@@ -16,9 +16,13 @@ export const studentProfile: StudentInfo = {
   email: 'amit15032003kumar@gmail.com',
   githubUsername: 'amit15032003kumar-cell',
   githubUrl: 'https://github.com/amit15032003kumar-cell',
-  specialization: 'Front-End Development & Modern UI/UX',
-  status: 'Active Full-Time Student (BCA Year 2)',
-  bio: 'A passionate BCA 2nd year student from Bihta, Bihar, dedicated to building responsive, modern, and high-performance web applications with clean code, smooth animations, and user-centric designs.',
+  instagramUsername: 'darky__here',
+  instagramUrl: 'https://instagram.com/darky__here',
+  linkedinUsername: 'aman-aryan-kumar',
+  linkedinUrl: 'https://www.linkedin.com/in/aman-aryan-kumar?utm_source=share_via&utm_content=profile&utm_medium=member_android',
+  specialization: 'Front-End Development & Modern Web Apps',
+  status: 'BCA 2nd Year Student • Open for Internships',
+  bio: 'Hey! I am Aman Kumar, a 2nd-year BCA student at G.J. College in Bihta, Patna. I love building web apps, crafting clean user interfaces in React and Tailwind, and putting my code on GitHub. Always learning something new every day.',
   photoUrl: '/avatar.png',
 };
 
@@ -26,212 +30,207 @@ export const fallbackProjects: Project[] = [
   {
     id: 'nimbus-weather',
     name: 'nimbus-weather',
-    title: 'Nimbus Weather Suite',
-    description: 'Beautiful weather web application featuring real-time meteorological data, geolocation tracking, and dynamic climate animations.',
-    detailedDescription: 'Engineered with responsive front-end components, geolocation lookups, multi-day forecasting, air quality indices, and clean dark/light mode visualization. Provides real-time weather analytics with intuitive visual feedback.',
-    language: 'HTML/CSS/JS',
-    languageColor: '#e34c26',
+    title: 'Nimbus Weather',
+    description: 'A clean weather web app that fetches real-time forecasts and weather conditions based on your current location or city search.',
+    detailedDescription: 'Built with JavaScript, OpenWeather API, and CSS. I wanted a simple, distraction-free weather dashboard that automatically detects user location and shows 5-day forecasts with clean responsive visuals.',
+    language: 'JavaScript / HTML',
+    languageColor: '#e4e4e7',
     stars: 2,
     forks: 0,
     repoUrl: 'https://github.com/amit15032003kumar-cell/nimbus-weather',
     liveUrl: 'https://github.com/amit15032003kumar-cell/nimbus-weather',
-    topics: ['weather-app', 'geolocation', 'responsive-design', 'weather-api', 'frontend'],
+    topics: ['weather-app', 'geolocation', 'vanilla-js', 'weather-api'],
     category: 'web',
     featured: true,
     highlights: [
-      'Real-time OpenWeather API integration',
-      'Dynamic weather condition animations',
-      'Location auto-detection with fallback search',
-      'Mobile-first responsive dashboard layout'
+      'Live OpenWeather API integration',
+      'Automatic geolocation lookup with search fallback',
+      'Responsive design that works on mobile and desktop',
+      'Custom weather condition icons and temperature toggle'
     ],
-    previewGradient: 'from-cyan-950 via-slate-900 to-blue-950',
+    previewGradient: 'from-zinc-900 to-black',
     updatedAt: '2026-06-30'
   },
   {
     id: 'song-identifier',
     name: 'song-identifier',
-    title: 'SoundWave: Song Identifier',
-    description: 'Interactive audio recognition and music identifier web interface designed for beat, pitch, and melody discovery.',
-    detailedDescription: 'An interactive audio web interface enabling users to search and discover songs by singing, humming, or beat detection. Features modern Web Audio visualization, responsive audio controls, and an immersive sound spectrum UI.',
-    language: 'HTML/JavaScript',
-    languageColor: '#f1e05a',
+    title: 'Song Identifier',
+    description: 'A web tool that visualizes audio frequencies and helps identify tracks through microphone input and sound patterns.',
+    detailedDescription: 'An experiment with the Web Audio API and audio spectrum analysis in the browser. Features real-time frequency bar animations, beat detection, and track search.',
+    language: 'JavaScript',
+    languageColor: '#a1a1aa',
     stars: 3,
     forks: 1,
     repoUrl: 'https://github.com/amit15032003kumar-cell/song-identifier',
     liveUrl: 'https://github.com/amit15032003kumar-cell/song-identifier',
-    topics: ['audio-recognition', 'music-finder', 'web-audio', 'interactive-ui', 'sound-waves'],
+    topics: ['audio-analysis', 'web-audio-api', 'music-finder', 'canvas-visualizer'],
     category: 'web',
     featured: true,
     highlights: [
-      'Interactive visualizer canvas for audio waves',
-      'Beat detection and microphone input processing',
-      'Sleek glassmorphism media player card layout',
-      'Instant search and track preview interface'
+      'Real-time frequency visualizer rendered on HTML5 canvas',
+      'Microphone stream capture and pitch detection',
+      'Minimalist dark media player interface',
+      'Quick search and preview playback'
     ],
-    previewGradient: 'from-emerald-950 via-slate-900 to-teal-950',
+    previewGradient: 'from-zinc-900 to-black',
     updatedAt: '2026-06-30'
   },
   {
     id: 'DIET-BASED-QPP',
     name: 'DIET-BASED-QPP',
-    title: 'NutriTrack: Diet & Hydration App',
-    description: 'Comprehensive health application offering customized diet planning, calorie guidance, and daily water consumption tracking.',
-    detailedDescription: 'Built to empower users in maintaining balanced nutritional habits. Features customizable daily meal schedules, automated hydration reminders, calorie intake calculators, and responsive progress statistics.',
+    title: 'Diet & Hydration App',
+    description: 'An Android app built with Kotlin to log daily meals, track water intake, and stay on top of personal nutrition goals.',
+    detailedDescription: 'Developed in Kotlin for Android to help students and friends monitor daily calories and water intake. Keeps a local record of meal history and provides helpful reminders.',
     language: 'Kotlin',
-    languageColor: '#A97BFF',
+    languageColor: '#71717a',
     stars: 1,
     forks: 0,
     repoUrl: 'https://github.com/amit15032003kumar-cell/DIET-BASED-QPP',
     liveUrl: 'https://github.com/amit15032003kumar-cell/DIET-BASED-QPP',
-    topics: ['health-tech', 'diet-planner', 'hydration-tracker', 'kotlin', 'nutrition'],
+    topics: ['android', 'kotlin', 'diet-tracker', 'water-reminder'],
     category: 'mobile',
     featured: true,
     highlights: [
-      'Daily calorie and macro-nutrient breakdown',
-      'Smart hydration counter with progress ring',
-      'Custom dietary preference profiles',
-      'Clean data persistence for daily logs'
+      'Daily meal calorie counter and macro estimations',
+      'Water intake tracking ring with reminder alerts',
+      'Offline local data storage for daily logs',
+      'Clean Material Design UI'
     ],
-    previewGradient: 'from-amber-950 via-slate-900 to-emerald-950',
+    previewGradient: 'from-zinc-900 to-black',
     updatedAt: '2026-06-25'
   },
   {
     id: 'breath-mirror-main',
     name: 'breath-mirror-main',
-    title: 'Breath Mirror: Zen Focus',
-    description: 'Mindfulness and visual breathing pacer designed with rhythm-synced animations to promote relaxation and focus.',
-    detailedDescription: 'A front-end mindfulness application designed to guide rhythmic diaphragmatic breathing. Features soothing visual pacing rings, customizable inhale-hold-exhale timers, and an ambient dark relaxation backdrop.',
-    language: 'HTML/CSS/JS',
-    languageColor: '#563d7c',
+    title: 'Breath Mirror',
+    description: 'A peaceful breathing exercise app with rhythmic visual animations to help take calm breathing breaks while coding.',
+    detailedDescription: 'I built this small web app for myself when I needed quick stress-relief breaks during long coding sessions. It guides your breathing with smooth expanding/contracting circles.',
+    language: 'HTML & CSS',
+    languageColor: '#d4d4d8',
     stars: 1,
     forks: 0,
     repoUrl: 'https://github.com/amit15032003kumar-cell/breath-mirror-main',
     liveUrl: 'https://github.com/amit15032003kumar-cell/breath-mirror-main',
-    topics: ['mindfulness', 'breathing-app', 'css-animations', 'zen-ui', 'wellness'],
+    topics: ['mindfulness', 'breathing-exercise', 'css-keyframes', 'relaxation'],
     category: 'web',
     featured: false,
     highlights: [
-      'Fluid CSS geometric breathing circle cycle',
-      'Harmonic timing modes (Box breathing, 4-7-8)',
-      'Minimalist distraction-free layout',
-      'Accessible keyboard & touch controls'
+      'Smooth CSS keyframe expansion and contraction cycle',
+      'Standard 4-4-4 box breathing pacing mode',
+      'Completely distraction-free black background',
+      'Zero dependencies, fast load time'
     ],
-    previewGradient: 'from-purple-950 via-slate-900 to-indigo-950',
+    previewGradient: 'from-zinc-900 to-black',
     updatedAt: '2026-06-28'
   },
   {
     id: 'Weather-Info',
     name: 'Weather-Info',
-    title: 'Weather-Info Data Explorer',
-    description: 'Atmospheric data processing and analysis tool exploring climatic trends and meteorological metrics in CLI/Notebook environments.',
-    detailedDescription: 'Developed to query and format weather metrics from public climate data sources. Explores temperature variance, precipitation statistics, and data cleaning workflows.',
-    language: 'Jupyter Notebook',
-    languageColor: '#DA5B0B',
+    title: 'Weather Data Scripts',
+    description: 'Python and Jupyter notebooks for fetching historical weather metrics and testing data visualization plots.',
+    detailedDescription: 'Exploratory scripts written during my BCA coursework to practice data handling, REST APIs, and basic graphing using Python.',
+    language: 'Python',
+    languageColor: '#a1a1aa',
     stars: 0,
     forks: 0,
     repoUrl: 'https://github.com/amit15032003kumar-cell/Weather-Info',
     liveUrl: 'https://github.com/amit15032003kumar-cell/Weather-Info',
-    topics: ['data-analysis', 'jupyter-notebook', 'weather-data', 'python', 'analytics'],
+    topics: ['python', 'data-analysis', 'weather-data', 'jupyter'],
     category: 'utility',
     featured: false,
     highlights: [
-      'Climatic data cleaning and inspection',
-      'Statistical temperature distribution plots',
-      'API ingestion and tabular structuring',
-      'Command-line data querying interface'
+      'Public weather API data extraction',
+      'Temperature and rainfall data parsing',
+      'Clean data formatting in Jupyter Notebook',
+      'Simple statistical summaries'
     ],
-    previewGradient: 'from-blue-950 via-slate-900 to-cyan-950',
+    previewGradient: 'from-zinc-900 to-black',
     updatedAt: '2026-06-29'
   },
   {
     id: 'calculator',
     name: 'calculator',
-    title: 'CLI Arithmetic Calculator',
-    description: 'Lightweight arithmetic calculation engine engineered with clear command-line prompts and reliable mathematical parsing.',
-    detailedDescription: 'Created as an foundational programming exercise exploring control structures, algorithmic input validation, error handling for edge cases (divide by zero), and modular arithmetic functions.',
-    language: 'C / Scripting',
+    title: 'CLI Calculator',
+    description: 'A command-line arithmetic calculator written in C to practice algorithmic fundamentals and error handling.',
+    detailedDescription: 'One of my early college programming exercises in C. Parses arithmetic inputs, handles operator precedence, and prevents divide-by-zero errors.',
+    language: 'C',
     languageColor: '#555555',
     stars: 0,
     forks: 0,
     repoUrl: 'https://github.com/amit15032003kumar-cell/calculator',
     liveUrl: 'https://github.com/amit15032003kumar-cell/calculator',
-    topics: ['calculator', 'algorithms', 'cmd-line', 'fundamentals'],
+    topics: ['c-programming', 'algorithms', 'college-fundamentals', 'cli'],
     category: 'tool',
     featured: false,
     highlights: [
-      'Robust expression handling and evaluation',
-      'Command line interface with interactive loops',
-      'Input sanitization and division checks',
-      'Lightweight memory footprint'
+      'Basic arithmetic: addition, subtraction, multiplication, division',
+      'Input validation and edge case prevention',
+      'Terminal-based menu and continuous loop',
+      'Clear, commented source code'
     ],
-    previewGradient: 'from-slate-900 via-zinc-900 to-slate-950',
+    previewGradient: 'from-zinc-900 to-black',
     updatedAt: '2026-01-10'
   }
 ];
 
 export const skillsData = [
   {
-    category: 'Front-End Core',
+    category: 'Front-End Development',
     skills: [
-      { name: 'HTML5 Semantic Markup', level: 'Advanced', percent: 92, icon: 'code' },
-      { name: 'Modern CSS3 & Animations', level: 'Advanced', percent: 90, icon: 'palette' },
-      { name: 'JavaScript (ES6+)', level: 'Advanced', percent: 88, icon: 'file-code' },
-      { name: 'TypeScript', level: 'Intermediate', percent: 78, icon: 'shield-check' },
+      { name: 'HTML5 & Semantic Structure', level: 'Comfortable', percent: 90, icon: 'code' },
+      { name: 'CSS3, Flexbox & Grid', level: 'Comfortable', percent: 92, icon: 'palette' },
+      { name: 'JavaScript (ES6+)', level: 'Comfortable', percent: 85, icon: 'file-code' },
+      { name: 'React.js', level: 'Active focus', percent: 84, icon: 'atom' },
+      { name: 'Tailwind CSS', level: 'Daily driver', percent: 94, icon: 'wind' },
+      { name: 'TypeScript', level: 'Learning & Building', percent: 75, icon: 'shield-check' },
     ]
   },
   {
-    category: 'Frameworks & Styling',
+    category: 'Tools & Workflow',
     skills: [
-      { name: 'React.js', level: 'Proficient', percent: 85, icon: 'atom' },
-      { name: 'Tailwind CSS', level: 'Advanced', percent: 94, icon: 'wind' },
-      { name: 'Responsive Layouts & Mobile UI', level: 'Expert', percent: 95, icon: 'smartphone' },
-      { name: 'Framer Motion (Animations)', level: 'Proficient', percent: 82, icon: 'sparkles' },
+      { name: 'Git & GitHub', level: 'Daily driver', percent: 88, icon: 'git-branch' },
+      { name: 'VS Code', level: 'Daily driver', percent: 95, icon: 'code' },
+      { name: 'Vite & npm', level: 'Comfortable', percent: 85, icon: 'zap' },
+      { name: 'Responsive Web Design', level: 'Comfortable', percent: 92, icon: 'smartphone' },
+      { name: 'Browser DevTools & Debugging', level: 'Comfortable', percent: 85, icon: 'layout' },
+      { name: 'REST APIs & Fetch', level: 'Comfortable', percent: 82, icon: 'network' },
     ]
   },
   {
-    category: 'Tools & Workflows',
+    category: 'BCA Coursework & Basics',
     skills: [
-      { name: 'Git & GitHub Version Control', level: 'Proficient', percent: 86, icon: 'git-branch' },
-      { name: 'Vite & Modern Build Tools', level: 'Proficient', percent: 84, icon: 'zap' },
-      { name: 'RESTful APIs Integration', level: 'Proficient', percent: 82, icon: 'network' },
-      { name: 'UI/UX Wireframing & Design', level: 'Advanced', percent: 88, icon: 'layout' },
-    ]
-  },
-  {
-    category: 'Academic BCA Modules',
-    skills: [
-      { name: 'Data Structures & Algorithms', level: 'Academic', percent: 80, icon: 'binary' },
-      { name: 'Database Management (DBMS/SQL)', level: 'Academic', percent: 78, icon: 'database' },
-      { name: 'Object-Oriented Programming (C++/Java)', level: 'Academic', percent: 82, icon: 'cpu' },
-      { name: 'Computer Networks & Web Architecture', level: 'Academic', percent: 80, icon: 'globe' },
+      { name: 'C / C++ Basics', level: 'College Syllabus', percent: 80, icon: 'cpu' },
+      { name: 'Data Structures', level: 'College Syllabus', percent: 78, icon: 'binary' },
+      { name: 'Database & SQL Basics', level: 'College Syllabus', percent: 76, icon: 'database' },
+      { name: 'Computer Networks', level: 'College Syllabus', percent: 80, icon: 'globe' },
     ]
   }
 ];
 
 export const academicTimeline = [
   {
-    period: '2024 – 2027 (Current)',
-    degree: 'Bachelor of Computer Applications (BCA) - 2nd Year',
-    institution: 'G.J. College Rambagh, Bihta',
-    university: 'Patliputra University (PPU), Patna, Bihar',
-    status: 'In Progress • 2nd Year Enrolled',
-    description: 'Focusing on Computer Applications, Advanced Data Structures, Web Systems, Database Architecture, and modern Software Engineering practices.',
+    period: '2024 – 2027',
+    degree: 'Bachelor of Computer Applications (BCA)',
+    institution: 'G.J. College Rambagh, Bihta (Patna, Bihar)',
+    university: 'Affiliated to Patliputra University (PPU), Patna',
+    status: 'Currently in 2nd Year',
+    description: 'Pursuing my degree in Computer Applications with coursework in Programming, Web Technologies, Data Structures, and Database Systems.',
     highlights: [
-      'Top performer in Web Technologies and Programming coursework',
-      'Leading front-end development projects and practical labs',
-      'Actively exploring modern React ecosystem and cloud tools'
+      'Regular student at G.J. College Rambagh Bihta',
+      'Focusing spare time on modern React and front-end development',
+      'Actively publishing projects to GitHub'
     ]
   },
   {
     period: '2022 – 2024',
-    degree: 'Higher Secondary / Intermediate Education',
-    institution: 'BSEB, Bihar',
-    university: 'State Board of Education, Patna, Bihar',
-    status: 'Completed with First Division',
-    description: 'Built strong foundational discipline in Mathematics, Physics, and Logic which paved the passion for Computer Science and UI/UX design.',
+    degree: 'Intermediate / 12th Standard',
+    institution: 'BSEB Board, Patna, Bihar',
+    university: 'Bihar School Examination Board',
+    status: 'Completed',
+    description: 'Completed higher secondary education in Science stream, laying the foundation for computer science and logical problem solving.',
     highlights: [
-      'Consistent academic standing and problem-solving focus',
-      'Initiated self-directed web development and coding studies'
+      'Science and mathematics background',
+      'Developed early interest in web programming and computers'
     ]
   }
 ];

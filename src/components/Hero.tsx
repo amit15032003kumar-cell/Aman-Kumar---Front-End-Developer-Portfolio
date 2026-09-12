@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Sparkles,
-  ArrowRight,
+  ArrowDown,
   Github,
+  Instagram,
+  Linkedin,
+  Mail,
   MapPin,
   GraduationCap,
-  Download,
-  Code2,
-  Cpu,
-  Layers,
-  CheckCircle2,
-  IdCard
+  IdCard,
+  Code,
+  ExternalLink
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
 import { LanyardBadge } from './LanyardBadge';
@@ -28,104 +27,140 @@ export const Hero: React.FC<HeroProps> = ({
   isLanyardExpanded,
   onToggleLanyard
 }) => {
-  return (
-    <section id="hero" className="relative pt-24 sm:pt-28 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
-      {/* Background ambient glow circles */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-[350px] h-[300px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+  const roles = useMemo(
+    () => ['Front-End Developer', 'BCA Student', 'UI Designer'],
+    []
+  );
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentRole = roles[roleIndex];
+    let timer: NodeJS.Timeout;
+
+    if (!isDeleting && displayText === currentRole) {
+      // Completed typing the current role, wait before backspacing
+      timer = setTimeout(() => {
+        setIsDeleting(true);
+      }, 1800);
+    } else if (isDeleting && displayText === '') {
+      // Finished backspacing, move to next role
+      setIsDeleting(false);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    } else {
+      // Typing or backspacing each character
+      const typingSpeed = isDeleting ? 40 : 85;
+      timer = setTimeout(() => {
+        setDisplayText((prev) => {
+          if (isDeleting) {
+            return currentRole.substring(0, prev.length - 1);
+          } else {
+            return currentRole.substring(0, prev.length + 1);
+          }
+        });
+      }, typingSpeed);
+    }
+
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, roleIndex, roles]);
+
+  return (
+    <section id="academic-id" className="relative pt-4 sm:pt-8 pb-16 lg:pb-20 border-b border-zinc-900 bg-black">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        
+        {/* Main Grid: ID Card is prioritized at the top on mobile and prominently presented on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
-          {/* Left Column: Introduction & Pitch */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          {/* Lanyard Student ID Card */}
+          <div className="lg:col-span-5 flex flex-col items-center order-1 lg:order-2">
+            <div className="w-full flex flex-col items-center">
+              <LanyardBadge
+                isExpandedControlled={isLanyardExpanded}
+                onToggleExpand={onToggleLanyard}
+              />
+            </div>
+          </div>
+
+          {/* Genuine Human Developer Bio */}
+          <div className="lg:col-span-7 space-y-6 text-left order-2 lg:order-1 pt-2 lg:pt-4">
             
-            {/* Academic & Status Chips */}
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-cyan-500/30 text-xs font-semibold text-cyan-300 shadow-sm">
-                <GraduationCap className="w-3.5 h-3.5 text-cyan-400" />
-                <span>BCA 2nd Year • G.J. College Rambagh Bihta</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/90 border border-slate-700 text-xs text-slate-300">
-                <MapPin className="w-3.5 h-3.5 text-rose-400" />
-                <span>Bihta, Bihar (Patna)</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs text-emerald-300 font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Available for Internships & Projects</span>
-              </div>
+            {/* Real status indicator - Black & Grey styling */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+              <span className="w-2 h-2 rounded-full bg-zinc-400 animate-pulse" />
+              <span>Available for front-end developer roles & internships</span>
             </div>
 
-            {/* Main Headline */}
+            {/* Direct personal intro */}
             <div className="space-y-3">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-                Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-400">{studentProfile.name}</span>.
-                <br />
-                <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-300">
-                  Building Modern Front-End Web Experiences.
-                </span>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
+                Aman Kumar
               </h1>
-              
-              <p className="text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed pt-2">
-                I am a BCA 2nd year student at <span className="text-slate-200 font-semibold">G.J. College Rambagh Bihta</span> (Patna, Bihar). 
-                I specialize in <strong className="text-cyan-300 font-semibold">Front-End Development</strong>, crafting high-performance, 
-                responsive, and aesthetic web interfaces with modern frameworks, 3D animations, and clean architectures.
+
+              {/* Dynamic Typing Animation for Roles */}
+              <div
+                id="hero-typing-role"
+                className="flex items-center min-h-[2.25rem] text-lg sm:text-xl font-medium text-zinc-300"
+              >
+                <span className="text-zinc-500 font-mono text-sm sm:text-base mr-2 select-none">
+                  ❯
+                </span>
+                <span className="text-white font-semibold font-mono tracking-tight">
+                  {displayText}
+                </span>
+                <span className="inline-block w-2 h-5 bg-zinc-400 ml-1.5 animate-pulse" />
+              </div>
+
+              <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-xl">
+                I'm a student at <span className="text-white font-medium">G.J. College Rambagh, Bihta</span> (Patliputra University, Patna). 
+                I focus on building clean, responsive web applications using React, JavaScript, and Tailwind CSS.
+              </p>
+              <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-mono">
+                Pull down my college badge on the right (or tap the button) to inspect my student credentials, verified roll number, and direct contact channels.
               </p>
             </div>
 
-            {/* Key Skill Highlights Badges */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-              <div className="p-3 rounded-xl bg-slate-900/70 border border-slate-800 flex items-center gap-2.5">
-                <div className="p-2 rounded-lg bg-cyan-950/60 text-cyan-400 border border-cyan-800/40">
-                  <Code2 className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-mono text-slate-400">Expertise</div>
-                  <div className="text-sm font-bold text-slate-200">React & Modern UI</div>
-                </div>
+            {/* College & Academic Details Table */}
+            <div className="grid grid-cols-2 gap-2.5 max-w-lg pt-1 text-xs font-mono">
+              <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+                <span className="text-[10px] text-zinc-400 uppercase block">College</span>
+                <span className="text-zinc-200 font-medium">G.J. College Rambagh</span>
               </div>
-
-              <div className="p-3 rounded-xl bg-slate-900/70 border border-slate-800 flex items-center gap-2.5">
-                <div className="p-2 rounded-lg bg-blue-950/60 text-blue-400 border border-blue-800/40">
-                  <Layers className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-mono text-slate-400">Design</div>
-                  <div className="text-sm font-bold text-slate-200">Responsive & Dark</div>
-                </div>
+              <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+                <span className="text-[10px] text-zinc-400 uppercase block">Affiliation</span>
+                <span className="text-zinc-200 font-medium">Patliputra University</span>
               </div>
-
-              <div className="p-3 rounded-xl bg-slate-900/70 border border-slate-800 flex items-center gap-2.5 col-span-2 sm:col-span-1">
-                <div className="p-2 rounded-lg bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">
-                  <Cpu className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs font-mono text-slate-400">Code Hub</div>
-                  <div className="text-sm font-bold text-slate-200">8+ GitHub Repos</div>
-                </div>
+              <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+                <span className="text-[10px] text-zinc-400 uppercase block">Location</span>
+                <span className="text-zinc-200 font-medium">Bihta, Patna (Bihar)</span>
+              </div>
+              <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
+                <span className="text-[10px] text-zinc-400 uppercase block">Program</span>
+                <span className="text-zinc-200 font-medium">BCA (Session 2024–27)</span>
               </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-4">
+            {/* Action buttons */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 type="button"
                 onClick={onExploreProjects}
                 id="hero-explore-projects-btn"
-                className="px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 flex items-center gap-2 transition-all cursor-pointer"
+                className="px-5 py-2.5 rounded-lg font-semibold text-xs bg-white hover:bg-zinc-200 text-black flex items-center gap-2 transition-colors cursor-pointer"
               >
-                <span>Explore GitHub Projects</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>View Projects</span>
+                <ArrowDown className="w-3.5 h-3.5" />
               </button>
 
               <button
                 type="button"
                 onClick={() => onToggleLanyard(!isLanyardExpanded)}
                 id="hero-toggle-lanyard-btn"
-                className="px-5 py-3 rounded-xl font-semibold text-sm bg-slate-900 hover:bg-slate-800 text-cyan-300 border border-cyan-500/30 hover:border-cyan-400 flex items-center gap-2 shadow-sm transition-all cursor-pointer"
+                className="px-4 py-2.5 rounded-lg font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 hover:border-zinc-700 flex items-center gap-2 transition-colors cursor-pointer"
               >
-                <IdCard className="w-4 h-4 text-cyan-400" />
-                <span>{isLanyardExpanded ? 'Fold College ID' : 'Pull Academic Lanyard ID'}</span>
+                <IdCard className="w-3.5 h-3.5 text-zinc-400" />
+                <span>{isLanyardExpanded ? 'Fold ID Card' : 'Pull Student ID'}</span>
               </button>
 
               <a
@@ -133,49 +168,51 @@ export const Hero: React.FC<HeroProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 id="hero-github-btn"
-                className="px-4 py-3 rounded-xl font-medium text-sm bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 flex items-center gap-2 transition-all"
+                className="px-4 py-2.5 rounded-lg font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 flex items-center gap-2 transition-colors"
               >
-                <Github className="w-4 h-4" />
-                <span>GitHub Profile</span>
+                <Github className="w-3.5 h-3.5" />
+                <span>GitHub ({studentProfile.githubUsername})</span>
+              </a>
+
+              <a
+                href={studentProfile.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                id="hero-instagram-btn"
+                className="px-4 py-2.5 rounded-lg font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 flex items-center gap-2 transition-colors"
+              >
+                <Instagram className="w-3.5 h-3.5" />
+                <span>@{studentProfile.instagramUsername}</span>
+              </a>
+
+              <a
+                href={studentProfile.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                id="hero-linkedin-btn"
+                className="px-4 py-2.5 rounded-lg font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 flex items-center gap-2 transition-colors"
+              >
+                <Linkedin className="w-3.5 h-3.5" />
+                <span>LinkedIn</span>
+              </a>
+
+              <a
+                href="#contact"
+                onClick={onOpenContact}
+                id="hero-contact-btn"
+                className="px-4 py-2.5 rounded-lg font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 flex items-center gap-2 transition-colors"
+              >
+                <Mail className="w-3.5 h-3.5" />
+                <span>Message Me</span>
               </a>
             </div>
 
-            {/* Quick Trust Highlights */}
-            <div className="pt-4 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-slate-400 font-mono">
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
-                Front-End Specialization
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
-                Patliputra University Affiliated
-              </span>
-              <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
-                Interactive 3D UI & Flip Cards
-              </span>
+            {/* Human developer note */}
+            <div className="pt-2 flex items-center gap-4 text-xs text-zinc-400 font-mono">
+              <span>● Real GitHub repositories</span>
+              <span>● G.J. College Rambagh verified ID</span>
             </div>
 
-          </div>
-
-          {/* Right Column: College Lanyard ID Card Hanging Showcase */}
-          <div className="lg:col-span-5 flex flex-col items-center justify-start relative">
-            {/* Lanyard Feature Header Badge */}
-            <div className="mb-2 text-center">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-[11px] font-mono text-cyan-300 font-semibold">
-                <Sparkles className="w-3 h-3 text-cyan-400" />
-                <span>Interactive College Lanyard Card</span>
-              </span>
-              <p className="text-xs text-slate-400 mt-1">
-                Pull down the ID badge below to inspect contact details
-              </p>
-            </div>
-
-            {/* The Lanyard Badge */}
-            <LanyardBadge
-              isExpandedControlled={isLanyardExpanded}
-              onToggleExpand={onToggleLanyard}
-            />
           </div>
 
         </div>

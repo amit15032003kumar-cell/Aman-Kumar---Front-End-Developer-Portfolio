@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ProjectGallery } from './components/ProjectGallery';
@@ -6,9 +6,30 @@ import { SkillsSection } from './components/SkillsSection';
 import { AcademicStatus } from './components/AcademicStatus';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
+import { ThemeMode } from './types';
 
 export default function App() {
   const [isLanyardExpanded, setIsLanyardExpanded] = useState(false);
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    try {
+      const saved = localStorage.getItem('portfolio-theme');
+      return saved === 'slate-gray' ? 'slate-gray' : 'deep-black';
+    } catch {
+      return 'deep-black';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('portfolio-theme', theme);
+    } catch {
+      // ignore storage errors
+    }
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === 'deep-black' ? 'slate-gray' : 'deep-black'));
+  };
 
   const handleTriggerLanyard = () => {
     setIsLanyardExpanded((prev) => !prev);
@@ -37,11 +58,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090b10] text-slate-100 selection:bg-cyan-500/30 selection:text-cyan-200">
-      {/* Top Navbar */}
+    <div
+      className={`min-h-screen ${
+        theme === 'slate-gray' ? 'theme-slate-gray' : 'theme-deep-black'
+      } bg-black text-zinc-100 selection:bg-zinc-800 selection:text-white font-sans antialiased transition-colors duration-200`}
+    >
+      {/* Top Navbar with Theme Toggle */}
       <Navbar
         onTriggerLanyardPull={handleTriggerLanyard}
         isLanyardExpanded={isLanyardExpanded}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       <main>

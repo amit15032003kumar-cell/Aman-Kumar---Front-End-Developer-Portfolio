@@ -34,11 +34,17 @@ export interface StudentInfo {
   email: string;
   githubUsername: string;
   githubUrl: string;
+  instagramUsername: string;
+  instagramUrl: string;
+  linkedinUsername: string;
+  linkedinUrl: string;
   specialization: string;
   status: string;
   bio: string;
   photoUrl: string;
 }
+
+export type ThemeMode = 'deep-black' | 'slate-gray';
 
 export interface ContactFormData {
   name: string;
