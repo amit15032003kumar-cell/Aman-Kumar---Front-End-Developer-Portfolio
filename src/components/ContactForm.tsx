@@ -94,6 +94,61 @@ export const ContactForm: React.FC = () => {
     setTimeout(() => setCopiedEmail(false), 2600);
   };
 
+  /**
+   * Lightweight celebratory confetti animation triggered on successful form submission
+   */
+  const triggerSuccessConfetti = () => {
+    try {
+      // Left cannon burst
+      confetti({
+        particleCount: 36,
+        angle: 60,
+        spread: 55,
+        startVelocity: 35,
+        origin: { x: 0.2, y: 0.65 },
+        colors: ['#ffffff', '#f4f4f5', '#e4e4e7', '#a1a1aa', '#38bdf8', '#60a5fa'],
+        ticks: 200,
+        gravity: 1.1,
+        scalar: 0.85,
+        shapes: ['circle', 'square'],
+        disableForReducedMotion: true,
+      });
+
+      // Right cannon burst
+      confetti({
+        particleCount: 36,
+        angle: 120,
+        spread: 55,
+        startVelocity: 35,
+        origin: { x: 0.8, y: 0.65 },
+        colors: ['#ffffff', '#f4f4f5', '#e4e4e7', '#a1a1aa', '#38bdf8', '#60a5fa'],
+        ticks: 200,
+        gravity: 1.1,
+        scalar: 0.85,
+        shapes: ['circle', 'square'],
+        disableForReducedMotion: true,
+      });
+
+      // Gentle secondary center flutter
+      setTimeout(() => {
+        confetti({
+          particleCount: 24,
+          spread: 75,
+          startVelocity: 24,
+          origin: { x: 0.5, y: 0.55 },
+          colors: ['#ffffff', '#e4e4e7', '#a1a1aa', '#38bdf8'],
+          ticks: 180,
+          gravity: 0.95,
+          scalar: 0.75,
+          shapes: ['circle', 'square'],
+          disableForReducedMotion: true,
+        });
+      }, 150);
+    } catch {
+      // Graceful fallback if confetti fails
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -113,6 +168,9 @@ export const ContactForm: React.FC = () => {
     setStatus('submitting');
     setTimeout(() => {
       setStatus('success');
+      triggerSuccessConfetti();
+      playUiPing(1760, 0.08);
+      setTimeout(() => playUiPing(2200, 0.08), 120);
     }, 600);
   };
 

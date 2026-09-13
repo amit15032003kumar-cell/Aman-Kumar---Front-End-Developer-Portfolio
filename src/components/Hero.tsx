@@ -68,11 +68,11 @@ export const Hero: React.FC<HeroProps> = ({
   }, [displayText, isDeleting, roleIndex, roles]);
 
   return (
-    <section id="academic-id" className="relative pt-4 sm:pt-8 pb-16 lg:pb-20 border-b border-zinc-900 bg-black">
+    <section id="academic-id" className="relative pt-3 sm:pt-6 lg:pt-8 pb-12 lg:pb-16 border-b border-zinc-900 bg-black">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Main Grid: ID Card is prioritized at the top on mobile and prominently presented on desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-start">
           
           {/* Lanyard Student ID Card */}
           <div className="lg:col-span-5 flex flex-col items-center order-1 lg:order-2">
@@ -85,14 +85,7 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* Genuine Human Developer Bio */}
-          <div className="lg:col-span-7 space-y-6 text-left order-2 lg:order-1 pt-2 lg:pt-4">
-            
-            {/* Real status indicator - Black & Grey styling */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
-              <span className="w-2 h-2 rounded-full bg-zinc-400 animate-pulse" />
-              <span>Available for front-end developer roles & internships</span>
-            </div>
-
+          <div className="lg:col-span-7 space-y-5 lg:space-y-6 text-left order-2 lg:order-1 pt-1 lg:pt-2">
             {/* Direct personal intro */}
             <div className="space-y-3">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">

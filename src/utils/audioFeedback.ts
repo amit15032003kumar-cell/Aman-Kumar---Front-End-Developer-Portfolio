@@ -35,11 +35,121 @@ export function isAudioEnabled(): boolean {
   }
 }
 
+let lastClickTimestamp = 0;
+
 /**
  * Subtle tactile mechanical click (tap / switch)
- * Crisp, low-latency, warm transient (~25ms)
+ * Crisp, low-latency, warm transient (~30ms)
  */
-export function playUiClick(volume = 0.05) {
+export function playUiClick(volume = 0.12) {
+  if (!isAudioEnabled()) return;
+  const nowMs = typeof performance !== 'undefined' ? performance.now() : Date.now();
+  if (nowMs - lastClickTimestamp < 35) return; // Prevent double-triggering
+  lastClickTimestamp = nowMs;
+
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    const filter = ctx.createBiquadFilter();
+
+    // Dual sweep: fast transient drop from 1400Hz to 380Hz for crisp physical button feel
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(1400, now);
+    osc.frequency.exponentialRampToValueAtTime(360, now + 0.028);
+
+    filter.type = 'bandpass';
+    filter.frequency.setValueAtTime(1100, now);
+    filter.Q.setValueAtTime(1.4, now);
+
+    // Fast exponential decay
+    gain.gain.setValueAtTime(volume, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.032);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.035);
+  } catch {
+    // Graceful fallback if audio is blocked
+  }
+}
+
+/**
+ * Card Pull Up Sound
+ * Simulates a realistic mechanical lanyard tension recoil,
+ * upward cord slide whoosh, and satisfying badge latch snap!
+ */
+export function playCardPullUpSound(volume = 0.16) {
+  if (!isAudioEnabled()) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  try {
+    const now = ctx.currentTime;
+
+    // Component 1: Upward Cord Recoil Whoosh (220Hz gliding rapidly up to 720Hz)
+    const cordOsc = ctx.createOscillator();
+    const cordGain = ctx.createGain();
+    const cordFilter = ctx.createBiquadFilter();
+
+    cordOsc.type = 'triangle';
+    cordOsc.frequency.setValueAtTime(240, now);
+    cordOsc.frequency.exponentialRampToValueAtTime(680, now + 0.09);
+
+    cordFilter.type = 'lowpass';
+    cordFilter.frequency.setValueAtTime(800, now);
+    cordFilter.frequency.linearRampToValueAtTime(1600, now + 0.09);
+
+    cordGain.gain.setValueAtTime(volume * 0.7, now);
+    cordGain.gain.linearRampToValueAtTime(volume * 0.9, now + 0.05);
+    cordGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+
+    cordOsc.connect(cordFilter);
+    cordFilter.connect(cordGain);
+    cordGain.connect(ctx.destination);
+
+    cordOsc.start(now);
+    cordOsc.stop(now + 0.12);
+
+    // Component 2: Crisp Mechanical Latch Snap / Clip Click (arriving as card clicks into locked top position)
+    const snapOsc = ctx.createOscillator();
+    const snapGain = ctx.createGain();
+    const snapFilter = ctx.createBiquadFilter();
+
+    const snapStart = now + 0.065;
+    snapOsc.type = 'sine';
+    snapOsc.frequency.setValueAtTime(1450, snapStart);
+    snapOsc.frequency.exponentialRampToValueAtTime(420, snapStart + 0.045);
+
+    snapFilter.type = 'bandpass';
+    snapFilter.frequency.setValueAtTime(1200, snapStart);
+    snapFilter.Q.setValueAtTime(2.2, snapStart);
+
+    snapGain.gain.setValueAtTime(volume * 1.1, snapStart);
+    snapGain.gain.exponentialRampToValueAtTime(0.0001, snapStart + 0.05);
+
+    snapOsc.connect(snapFilter);
+    snapFilter.connect(snapGain);
+    snapGain.connect(ctx.destination);
+
+    snapOsc.start(snapStart);
+    snapOsc.stop(snapStart + 0.055);
+  } catch {
+    // Graceful fallback
+  }
+}
+
+/**
+ * Card Pull Down Sound
+ * Elastic lanyard cord stretch & downward tension slide
+ */
+export function playCardPullDownSound(volume = 0.14) {
   if (!isAudioEnabled()) return;
   const ctx = getAudioContext();
   if (!ctx) return;
@@ -50,27 +160,25 @@ export function playUiClick(volume = 0.05) {
     const gain = ctx.createGain();
     const filter = ctx.createBiquadFilter();
 
-    // Subtle pitch drop from 1200Hz to 320Hz gives a clean physical switch feel
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(1200, now);
-    osc.frequency.exponentialRampToValueAtTime(320, now + 0.025);
+    // Downward elastic slide from 540Hz down to 220Hz
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(540, now);
+    osc.frequency.exponentialRampToValueAtTime(210, now + 0.11);
 
-    filter.type = 'bandpass';
-    filter.frequency.setValueAtTime(950, now);
-    filter.Q.setValueAtTime(1.2, now);
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(750, now);
 
-    // Fast exponential decay
-    gain.gain.setValueAtTime(volume, now);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.028);
+    gain.gain.setValueAtTime(volume * 0.85, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
 
     osc.connect(filter);
     filter.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(now);
-    osc.stop(now + 0.03);
+    osc.stop(now + 0.13);
   } catch {
-    // Graceful fallback if audio is blocked
+    // Graceful fallback
   }
 }
 

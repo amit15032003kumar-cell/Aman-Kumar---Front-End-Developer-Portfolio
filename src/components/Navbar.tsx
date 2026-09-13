@@ -9,18 +9,21 @@ import {
   X,
   ArrowDown,
   Contrast,
+  Sun,
+  Moon,
   Volume2,
   VolumeX
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
 import { ThemeMode } from '../types';
-import { playUiClick, playUiPing } from '../utils/audioFeedback';
+import { playUiClick, playUiPing, playCardPullUpSound, playCardPullDownSound } from '../utils/audioFeedback';
 
 interface NavbarProps {
   onTriggerLanyardPull?: () => void;
   isLanyardExpanded?: boolean;
   theme: ThemeMode;
   onToggleTheme: () => void;
+  onSelectTheme?: (mode: ThemeMode) => void;
   arcadeSoundEnabled: boolean;
   onToggleArcadeSound: () => void;
 }
@@ -30,6 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   isLanyardExpanded,
   theme,
   onToggleTheme,
+  onSelectTheme,
   arcadeSoundEnabled,
   onToggleArcadeSound
 }) => {
@@ -78,20 +82,47 @@ export const Navbar: React.FC<NavbarProps> = ({
               {studentProfile.name}
             </span>
             <span className="text-[11px] font-mono text-zinc-400 leading-none">
-              G.J. College Bihta • BCA 2nd Yr
+              <span className="md:hidden lg:inline">G.J. College Bihta • BCA 2nd Yr</span>
+              <span className="hidden md:inline lg:hidden">G.J. College • BCA</span>
             </span>
           </div>
         </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6 text-xs font-medium text-zinc-400">
+        {/* Tablet Nav (768px - 1023px): Streamlined 4-item pill dock */}
+        <nav className="hidden md:flex lg:hidden items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-950/70 border border-zinc-800 backdrop-blur-md text-[11px] font-mono text-zinc-400">
+          {[
+            { name: 'Projects', href: '#projects' },
+            { name: 'Skills', href: '#skills' },
+            { name: 'Arcade', href: '#arcade' },
+            { name: 'Contact', href: '#contact' },
+          ].map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => {
+                playUiClick();
+                playUiPing();
+              }}
+              id={`nav-link-tablet-${link.name.toLowerCase()}`}
+              className="px-2 py-0.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-900 transition-all cursor-pointer whitespace-nowrap"
+            >
+              {link.name}
+            </a>
+          ))}
+        </nav>
+
+        {/* Desktop Nav (1024px+): Full 6-item pill dock */}
+        <nav className="hidden lg:flex items-center gap-1 lg:gap-1.5 px-3 py-1.5 rounded-full bg-zinc-950/70 border border-zinc-850/80 backdrop-blur-md shadow-inner text-xs font-mono text-zinc-400">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              onClick={() => playUiPing()}
+              onClick={() => {
+                playUiClick();
+                playUiPing();
+              }}
               id={`nav-link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
-              className="hover:text-white transition-colors"
+              className="px-2.5 py-1 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-900/80 transition-all cursor-pointer whitespace-nowrap"
             >
               {link.name}
             </a>
@@ -99,107 +130,111 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right quick actions */}
-        <div className="hidden sm:flex items-center gap-2">
-          {/* Global Arcade Sound Toggle Button */}
-          <button
-            type="button"
-            onClick={() => {
-              playUiClick();
-              onToggleArcadeSound();
-            }}
-            id="navbar-arcade-sound-btn"
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer border ${
-              arcadeSoundEnabled
-                ? 'bg-zinc-900 hover:bg-zinc-800 text-zinc-200 hover:text-white border-zinc-750'
-                : 'bg-zinc-950 hover:bg-zinc-900 text-zinc-500 hover:text-zinc-300 border-zinc-850'
-            }`}
-            title={arcadeSoundEnabled ? 'Global Game Audio: ON (Click to Mute)' : 'Global Game Audio: MUTED (Click to Unmute)'}
-            aria-label={arcadeSoundEnabled ? 'Mute Game Audio' : 'Unmute Game Audio'}
-          >
-            {arcadeSoundEnabled ? (
-              <>
+        <div className="hidden sm:flex items-center gap-1.5 md:gap-2 lg:gap-2.5">
+          {/* Utility Cluster: Sound & Theme */}
+          <div className="flex items-center bg-zinc-900/90 border border-zinc-800 rounded-lg p-0.5 shadow-sm">
+            {/* Global Arcade Sound Toggle Button */}
+            <button
+              type="button"
+              onClick={() => {
+                playUiClick();
+                onToggleArcadeSound();
+              }}
+              id="navbar-arcade-sound-btn"
+              className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs font-mono transition-colors cursor-pointer ${
+                arcadeSoundEnabled
+                  ? 'bg-zinc-800 text-zinc-200'
+                  : 'text-zinc-500 hover:text-zinc-300'
+              }`}
+              title={arcadeSoundEnabled ? 'Global Game Audio: ON (Click to Mute)' : 'Global Game Audio: MUTED (Click to Unmute)'}
+              aria-label={arcadeSoundEnabled ? 'Mute Game Audio' : 'Unmute Game Audio'}
+            >
+              {arcadeSoundEnabled ? (
                 <Volume2 className="w-3.5 h-3.5 text-zinc-300" />
-                <span className="hidden lg:inline text-[11px]">Sound On</span>
-              </>
-            ) : (
-              <>
+              ) : (
                 <VolumeX className="w-3.5 h-3.5 text-zinc-500" />
-                <span className="hidden lg:inline text-[11px]">Muted</span>
-              </>
-            )}
-          </button>
+              )}
+              <span className="hidden xl:inline text-[11px]">
+                {arcadeSoundEnabled ? 'Sound' : 'Muted'}
+              </span>
+            </button>
 
-          {/* Theme Toggle Button */}
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={() => {
+                playUiClick();
+                onToggleTheme();
+              }}
+              id="theme-toggle-btn"
+              className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs font-mono text-zinc-300 hover:text-white transition-colors cursor-pointer"
+              title={`Theme: ${
+                theme === 'light'
+                  ? 'Light Mode'
+                  : theme === 'slate-gray'
+                  ? 'Slate Gray Mode'
+                  : 'Deep Black Mode'
+              } (Click to switch)`}
+            >
+              {theme === 'light' ? (
+                <Sun className="w-3.5 h-3.5 text-amber-500" />
+              ) : theme === 'slate-gray' ? (
+                <Moon className="w-3.5 h-3.5 text-blue-400" />
+              ) : (
+                <Contrast className="w-3.5 h-3.5 text-zinc-400" />
+              )}
+              <span className="hidden xl:inline text-[11px]">
+                {theme === 'light'
+                  ? 'Light'
+                  : theme === 'slate-gray'
+                  ? 'Slate'
+                  : 'Black'}
+              </span>
+            </button>
+          </div>
+
+          {/* Student ID Card Pull/Fold Trigger */}
           <button
             type="button"
             onClick={() => {
               playUiClick();
-              onToggleTheme();
-            }}
-            id="theme-toggle-btn"
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-mono bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer"
-            title={`Switch to ${theme === 'deep-black' ? 'Slate Gray mode' : 'Deep Black mode'}`}
-          >
-            <Contrast className="w-3.5 h-3.5 text-zinc-400" />
-            <span className="hidden md:inline text-[11px]">
-              {theme === 'deep-black' ? 'Deep Black' : 'Slate Gray'}
-            </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              playUiClick();
+              if (isLanyardExpanded) {
+                playCardPullUpSound();
+              } else {
+                playCardPullDownSound();
+              }
               onTriggerLanyardPull?.();
             }}
             id="navbar-lanyard-toggle-btn"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 hover:border-zinc-700 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 lg:px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 hover:border-zinc-700 transition-all cursor-pointer flex-shrink-0"
+            title={isLanyardExpanded ? 'Fold Student ID back up' : 'Pull Student ID down'}
           >
             <IdCard className="w-3.5 h-3.5 text-zinc-400" />
-            <span>{isLanyardExpanded ? 'Fold ID' : 'Student ID'}</span>
+            <span className="hidden md:inline">{isLanyardExpanded ? 'Fold ID' : 'Student ID'}</span>
           </button>
 
+          {/* GitHub Icon (Desktop) */}
           <a
             href={studentProfile.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => playUiClick()}
             id="navbar-github-link"
-            className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
+            className="hidden lg:flex p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors flex-shrink-0"
             title="GitHub Profile"
           >
-            <Github className="w-4 h-4" />
+            <Github className="w-3.5 h-3.5" />
           </a>
 
-          <a
-            href={studentProfile.instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => playUiClick()}
-            id="navbar-instagram-link"
-            className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
-            title="Instagram (@darky__here)"
-          >
-            <Instagram className="w-4 h-4" />
-          </a>
-
-          <a
-            href={studentProfile.linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => playUiClick()}
-            id="navbar-linkedin-link"
-            className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors"
-            title="LinkedIn (Aman Kumar)"
-          >
-            <Linkedin className="w-4 h-4" />
-          </a>
-
+          {/* Contact Action */}
           <a
             href="#contact"
-            onClick={() => playUiPing()}
+            onClick={() => {
+              playUiClick();
+              playUiPing();
+            }}
             id="navbar-contact-cta"
-            className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white hover:bg-zinc-200 text-black transition-colors"
+            className="px-2.5 sm:px-3 lg:px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white hover:bg-zinc-200 text-black transition-colors flex-shrink-0 shadow-sm"
           >
             Get in touch
           </a>
@@ -263,16 +298,58 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </button>
 
-            {/* Mobile Theme Toggle */}
-            <button
-              type="button"
-              onClick={onToggleTheme}
-              id="mobile-theme-toggle-btn"
-              className="flex items-center gap-1.5 text-xs text-zinc-300 py-2 px-3 rounded-md bg-zinc-900 border border-zinc-800 justify-center"
-            >
-              <Contrast className="w-3.5 h-3.5" />
-              <span>{theme === 'deep-black' ? 'Slate Gray' : 'Deep Black'}</span>
-            </button>
+            {/* Mobile Theme Selector */}
+            <div className="col-span-2 flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-1 gap-1">
+              <span className="text-[10px] font-mono text-zinc-400 px-2 uppercase">Theme:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  playUiClick();
+                  onSelectTheme ? onSelectTheme('deep-black') : onToggleTheme();
+                }}
+                id="mobile-theme-black-btn"
+                className={`flex-1 py-1.5 px-2 text-xs font-mono rounded-md flex items-center justify-center gap-1 transition-colors cursor-pointer ${
+                  theme === 'deep-black'
+                    ? 'bg-zinc-800 text-white font-semibold'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <Contrast className="w-3.5 h-3.5" />
+                <span>Black</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  playUiClick();
+                  onSelectTheme ? onSelectTheme('slate-gray') : onToggleTheme();
+                }}
+                id="mobile-theme-slate-btn"
+                className={`flex-1 py-1.5 px-2 text-xs font-mono rounded-md flex items-center justify-center gap-1 transition-colors cursor-pointer ${
+                  theme === 'slate-gray'
+                    ? 'bg-zinc-800 text-white font-semibold'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <Moon className="w-3.5 h-3.5 text-blue-400" />
+                <span>Slate</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  playUiClick();
+                  onSelectTheme ? onSelectTheme('light') : onToggleTheme();
+                }}
+                id="mobile-theme-light-btn"
+                className={`flex-1 py-1.5 px-2 text-xs font-mono rounded-md flex items-center justify-center gap-1 transition-colors cursor-pointer ${
+                  theme === 'light'
+                    ? 'bg-white text-black font-semibold shadow-sm'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <Sun className="w-3.5 h-3.5 text-amber-500" />
+                <span>Light</span>
+              </button>
+            </div>
 
             <a
               href={studentProfile.linkedinUrl}

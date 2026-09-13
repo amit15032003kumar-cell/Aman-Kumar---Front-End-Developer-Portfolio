@@ -107,6 +107,233 @@
   background: #475569;
 }
 
+/* =========================================
+   Light Mode Theme
+   ========================================= */
+.theme-light {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Page & Section Canvas */
+.theme-light,
+.theme-light .bg-black {
+  background-color: #f8fafc !important;
+}
+
+.theme-light section.bg-black {
+  background-color: #f8fafc !important;
+}
+
+.theme-light footer.bg-black {
+  background-color: #ffffff !important;
+}
+
+/* Header with backdrop blur */
+.theme-light header {
+  background-color: rgba(248, 250, 252, 0.88) !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+.theme-light #navbar-mobile-menu {
+  background-color: #ffffff !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+/* Elevated Card Surfaces */
+.theme-light .bg-zinc-950 {
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.02) !important;
+}
+
+.theme-light .bg-zinc-900 {
+  background-color: #f1f5f9 !important;
+}
+
+.theme-light .bg-zinc-900\/90,
+.theme-light .bg-zinc-900\/80 {
+  background-color: rgba(241, 245, 249, 0.95) !important;
+}
+
+.theme-light .bg-zinc-950\/80 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.theme-light .bg-zinc-800 {
+  background-color: #e2e8f0 !important;
+}
+
+.theme-light .bg-\[\#050505\] {
+  background-color: #f1f5f9 !important;
+}
+
+.theme-light .bg-\[\#080808\] {
+  background-color: #0f172a !important;
+}
+
+.theme-light .bg-\[\#0d0d0d\] {
+  background-color: #ffffff !important;
+}
+
+/* Hover States */
+.theme-light .hover\:bg-zinc-800:hover {
+  background-color: #e2e8f0 !important;
+}
+
+.theme-light .hover\:bg-zinc-900:hover {
+  background-color: #f1f5f9 !important;
+}
+
+.theme-light .hover\:bg-zinc-700:hover {
+  background-color: #cbd5e1 !important;
+}
+
+/* Borders */
+.theme-light .border-zinc-900 {
+  border-color: #e2e8f0 !important;
+}
+
+.theme-light .border-zinc-850,
+.theme-light .border-zinc-800,
+.theme-light .border-zinc-800\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+.theme-light .border-zinc-750,
+.theme-light .border-zinc-700 {
+  border-color: #cbd5e1 !important;
+}
+
+.theme-light .hover\:border-zinc-700:hover,
+.theme-light .hover\:border-zinc-600:hover {
+  border-color: #94a3b8 !important;
+}
+
+/* Typography & Headings */
+.theme-light .text-white {
+  color: #0f172a !important;
+}
+
+.theme-light .text-zinc-100 {
+  color: #0f172a !important;
+}
+
+.theme-light .text-zinc-200 {
+  color: #1e293b !important;
+}
+
+.theme-light .text-zinc-300 {
+  color: #334155 !important;
+}
+
+.theme-light .text-zinc-400 {
+  color: #64748b !important;
+}
+
+.theme-light .text-zinc-500 {
+  color: #64748b !important;
+}
+
+.theme-light .placeholder-zinc-500::placeholder,
+.theme-light .placeholder-zinc-600::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Primary CTA Inversion: Dark buttons on light background */
+.theme-light a.bg-white,
+.theme-light button.bg-white,
+.theme-light .bg-white.text-black {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+.theme-light a.bg-white:hover,
+.theme-light button.bg-white:hover,
+.theme-light .hover\:bg-zinc-200:hover {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+}
+
+.theme-light a.bg-white svg,
+.theme-light button.bg-white svg,
+.theme-light .bg-white.text-black svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Active Category Pill in ProjectGallery */
+.theme-light button.bg-white.text-black.font-semibold {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+/* Form Inputs */
+.theme-light input,
+.theme-light select,
+.theme-light textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.theme-light input:focus,
+.theme-light select:focus,
+.theme-light textarea:focus {
+  border-color: #0f172a !important;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1) !important;
+}
+
+/* Progress Bar Fill */
+.theme-light .bg-zinc-300 {
+  background-color: #0f172a !important;
+}
+
+/* Lanyard Student ID Card Physical Surface */
+.theme-light #hanging-student-id-card .bg-\[\#000000\] {
+  background-color: #ffffff !important;
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08) !important;
+}
+
+.theme-light #hanging-student-id-card .bg-\[\#0d0d0d\] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.12) !important;
+}
+
+.theme-light #hanging-student-id-card .border-zinc-800,
+.theme-light #hanging-student-id-card .border-zinc-800\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Arcade Monitor Screen: Preserve CRT Dark Stage for Crisp 8-Bit Pixel Render */
+.theme-light .aspect-square.bg-black,
+.theme-light canvas {
+  background-color: #000000 !important;
+}
+
+.theme-light .aspect-square.bg-black .text-white {
+  color: #ffffff !important;
+}
+
+.theme-light .aspect-square.bg-black .text-zinc-300 {
+  color: #cbd5e1 !important;
+}
+
+.theme-light .aspect-square.bg-black .text-zinc-400 {
+  color: #94a3b8 !important;
+}
+
+/* Light Scrollbar */
+.theme-light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.theme-light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+.theme-light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 /* Shimmer animation for skeleton loaders */
 @keyframes shimmer {
   100% {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
+import { ScrollReveal } from './components/ScrollReveal';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { DeveloperStatusBar } from './components/DeveloperStatusBar';
@@ -10,13 +11,17 @@ import { AcademicStatus } from './components/AcademicStatus';
 import { ContactForm } from './components/ContactForm';
 import { Footer } from './components/Footer';
 import { ThemeMode } from './types';
+import { playUiClick } from './utils/audioFeedback';
 
 export default function App() {
   const [isLanyardExpanded, setIsLanyardExpanded] = useState(false);
   const [theme, setTheme] = useState<ThemeMode>(() => {
     try {
       const saved = localStorage.getItem('portfolio-theme');
-      return saved === 'slate-gray' ? 'slate-gray' : 'deep-black';
+      if (saved === 'light' || saved === 'slate-gray' || saved === 'deep-black') {
+        return saved;
+      }
+      return 'deep-black';
     } catch {
       return 'deep-black';
     }
@@ -63,8 +68,30 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [soundToastMessage]);
 
+  // Global subtle tactile click feedback on interactive element clicks
+  useEffect(() => {
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      const clickable = target.closest('button, a, [role="button"], input[type="radio"], input[type="checkbox"]');
+      if (clickable) {
+        playUiClick();
+      }
+    };
+    window.addEventListener('click', handleGlobalClick, { capture: true, passive: true });
+    return () => window.removeEventListener('click', handleGlobalClick, { capture: true });
+  }, []);
+
   const handleToggleTheme = () => {
-    setTheme((prev) => (prev === 'deep-black' ? 'slate-gray' : 'deep-black'));
+    setTheme((prev) => {
+      if (prev === 'deep-black') return 'slate-gray';
+      if (prev === 'slate-gray') return 'light';
+      return 'deep-black';
+    });
+  };
+
+  const handleSelectTheme = (mode: ThemeMode) => {
+    setTheme(mode);
   };
 
   const handleTriggerLanyard = () => {
@@ -95,8 +122,12 @@ export default function App() {
 
   return (
     <div
-      className={`min-h-screen ${
-        theme === 'slate-gray' ? 'theme-slate-gray' : 'theme-deep-black'
+      className={`min-h-screen w-full overflow-x-hidden ${
+        theme === 'light'
+          ? 'theme-light'
+          : theme === 'slate-gray'
+          ? 'theme-slate-gray'
+          : 'theme-deep-black'
       } bg-black text-zinc-100 selection:bg-zinc-800 selection:text-white font-sans antialiased transition-colors duration-200`}
     >
       {/* Top Navbar with Theme & Global Sound Toggle */}
@@ -105,11 +136,12 @@ export default function App() {
         isLanyardExpanded={isLanyardExpanded}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        onSelectTheme={handleSelectTheme}
         arcadeSoundEnabled={arcadeSoundEnabled}
         onToggleArcadeSound={handleToggleArcadeSound}
       />
 
-      <main>
+      <main className="w-full overflow-x-hidden">
         {/* Hero with Lanyard Badge */}
         <Hero
           onExploreProjects={handleScrollToProjects}
@@ -118,36 +150,50 @@ export default function App() {
           onToggleLanyard={setIsLanyardExpanded}
         />
 
-        {/* Live System & Developer Status Bar (Black & Slate Grey) */}
-        <DeveloperStatusBar
-          arcadeSoundEnabled={arcadeSoundEnabled}
-          onToggleArcadeSound={handleToggleArcadeSound}
-        />
+        {/* Live System & Developer Status Bar */}
+        <ScrollReveal delayMs={50}>
+          <DeveloperStatusBar
+            arcadeSoundEnabled={arcadeSoundEnabled}
+            onToggleArcadeSound={handleToggleArcadeSound}
+          />
+        </ScrollReveal>
 
         {/* Dynamic GitHub Project Gallery */}
-        <ProjectGallery />
+        <ScrollReveal delayMs={100}>
+          <ProjectGallery />
+        </ScrollReveal>
 
         {/* Technical Skills & Capabilities */}
-        <SkillsSection />
+        <ScrollReveal delayMs={100}>
+          <SkillsSection />
+        </ScrollReveal>
 
-        {/* Retro Terminal Arcade Mini-Game (Byte Runner & Console) */}
-        <DevArcadeGame
-          soundEnabled={arcadeSoundEnabled}
-          onToggleSound={handleToggleArcadeSound}
-        />
+        {/* Retro Terminal Arcade Mini-Game */}
+        <ScrollReveal delayMs={100}>
+          <DevArcadeGame
+            soundEnabled={arcadeSoundEnabled}
+            onToggleSound={handleToggleArcadeSound}
+          />
+        </ScrollReveal>
 
         {/* Academic Profile: G.J. College Rambagh Bihta */}
-        <AcademicStatus />
+        <ScrollReveal delayMs={100}>
+          <AcademicStatus />
+        </ScrollReveal>
 
         {/* Integrated Contact Form */}
-        <ContactForm />
+        <ScrollReveal delayMs={100}>
+          <ContactForm />
+        </ScrollReveal>
       </main>
 
       {/* Footer */}
-      <Footer
-        onScrollToTop={handleScrollToTop}
-        onOpenLanyard={handleTriggerLanyard}
-      />
+      <ScrollReveal delayMs={60}>
+        <Footer
+          onScrollToTop={handleScrollToTop}
+          onOpenLanyard={handleTriggerLanyard}
+        />
+      </ScrollReveal>
 
       {/* Floating Audio Toast Notification for Instant Feedback */}
       {soundToastMessage && (

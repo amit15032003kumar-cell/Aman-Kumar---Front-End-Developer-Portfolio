@@ -12,6 +12,7 @@ import { fallbackProjects, studentProfile } from '../data/portfolioData';
 import { ProjectCard } from './ProjectCard';
 import { ProjectCardSkeleton } from './ProjectCardSkeleton';
 import { playUiClick, playUiPing, playUiPop } from '../utils/audioFeedback';
+import { ScrollReveal, ScrollRevealStagger } from './ScrollReveal';
 
 export const ProjectGallery: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>(fallbackProjects);
@@ -131,95 +132,99 @@ export const ProjectGallery: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-zinc-800">
-          <div className="space-y-2 text-left">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
-              <FolderGit2 className="w-3.5 h-3.5 text-zinc-400" />
-              <span>GitHub Repositories</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              Projects & Code
-            </h2>
-            <p className="text-sm text-zinc-400 max-w-xl">
-              Real repositories synced from <a href={studentProfile.githubUrl} target="_blank" rel="noreferrer" className="text-zinc-200 hover:underline font-mono">@{studentProfile.githubUsername}</a>. 
-              Explore codebase repositories, key architectural highlights, and direct live previews.
-            </p>
-          </div>
-
-          {/* GitHub Status & Refresh */}
-          <div className="flex items-center gap-2.5">
-            <div className="px-3 py-1.5 rounded-lg bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 font-mono flex items-center gap-2">
-              <Github className="w-3.5 h-3.5 text-zinc-400" />
-              <span>{projects.length} repos</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
+        <ScrollReveal delayMs={0}>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-zinc-800">
+            <div className="space-y-2 text-left">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300">
+                <FolderGit2 className="w-3.5 h-3.5 text-zinc-400" />
+                <span>GitHub Repositories</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                Projects & Code
+              </h2>
+              <p className="text-sm text-zinc-400 max-w-xl">
+                Real repositories synced from <a href={studentProfile.githubUrl} target="_blank" rel="noreferrer" className="text-zinc-200 hover:underline font-mono">@{studentProfile.githubUsername}</a>. 
+                Explore codebase repositories, key architectural highlights, and direct live previews.
+              </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                playUiPing();
-                fetchGitHubRepos();
-              }}
-              disabled={loading}
-              id="refresh-github-repos-btn"
-              className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
-              title="Sync live from GitHub"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-              <span>{loading ? 'Syncing...' : 'Sync'}</span>
-            </button>
+            {/* GitHub Status & Refresh */}
+            <div className="flex items-center gap-2.5">
+              <div className="px-3 py-1.5 rounded-lg bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 font-mono flex items-center gap-2">
+                <Github className="w-3.5 h-3.5 text-zinc-400" />
+                <span>{projects.length} repos</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  playUiPing();
+                  fetchGitHubRepos();
+                }}
+                disabled={loading}
+                id="refresh-github-repos-btn"
+                className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                title="Sync live from GitHub"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+                <span>{loading ? 'Syncing...' : 'Sync'}</span>
+              </button>
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Filter and Search Controls */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-          {/* Category Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => {
-                  playUiPop();
-                  setActiveCategory(cat.id);
-                }}
-                id={`filter-category-${cat.id}`}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
-                  activeCategory === cat.id
-                    ? 'bg-white text-black font-semibold'
-                    : 'bg-zinc-950 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-zinc-800'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
+        <ScrollReveal delayMs={80}>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+            {/* Category Pills */}
+            <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => {
+                    playUiPop();
+                    setActiveCategory(cat.id);
+                  }}
+                  id={`filter-category-${cat.id}`}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+                    activeCategory === cat.id
+                      ? 'bg-white text-black font-semibold'
+                      : 'bg-zinc-950 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900 border border-zinc-800'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
 
-          {/* Search Input */}
-          <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Filter by name or tech..."
-              id="search-projects-input"
-              className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-white placeholder-zinc-500 transition-colors"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => {
-                  playUiClick();
-                  setSearchQuery('');
-                }}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-zinc-500 hover:text-white cursor-pointer"
-              >
-                ✕
-              </button>
-            )}
+            {/* Search Input */}
+            <div className="relative w-full sm:w-64">
+              <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Filter by name or tech..."
+                id="search-projects-input"
+                className="w-full pl-8 pr-3 py-1.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-white placeholder-zinc-500 transition-colors"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    playUiClick();
+                    setSearchQuery('');
+                  }}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-zinc-500 hover:text-white cursor-pointer"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Project Cards Grid or Skeleton Loader */}
         {loading ? (
@@ -234,14 +239,15 @@ export const ProjectGallery: React.FC = () => {
             ))}
           </div>
         ) : filteredProjects.length > 0 ? (
-          <div
-            id="projects-grid"
+          <ScrollRevealStagger
+            key={`projects-view-${activeCategory}-${searchQuery}`}
+            staggerMs={60}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {filteredProjects.map((project) => (
               <ProjectCard key={project.name} project={project} />
             ))}
-          </div>
+          </ScrollRevealStagger>
         ) : (
           <div className="p-12 rounded-xl bg-zinc-950 border border-zinc-800 text-center space-y-3">
             <Code2 className="w-7 h-7 text-zinc-600 mx-auto" />

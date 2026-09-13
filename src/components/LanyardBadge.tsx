@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { studentProfile } from '../data/portfolioData';
 import { IdCardSkeleton } from './IdCardSkeleton';
+import { playCardPullUpSound, playCardPullDownSound, playUiClick } from '../utils/audioFeedback';
 
 interface LanyardBadgeProps {
   isExpandedControlled?: boolean;
@@ -70,33 +71,16 @@ export const LanyardBadge: React.FC<LanyardBadgeProps> = ({
     const nextVal = val !== undefined ? val : !isExpanded;
     setInternalExpanded(nextVal);
     if (onToggleExpand) onToggleExpand(nextVal);
-    playSnapSound();
-  };
-
-  // Subtle web audio tactile feedback for card pull
-  const playSnapSound = () => {
-    try {
-      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (!AudioContextClass) return;
-      const ctx = new AudioContextClass();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(320, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(160, ctx.currentTime + 0.12);
-      gain.gain.setValueAtTime(0.12, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.12);
-    } catch {
-      // Audio not permitted or supported; ignore silently
+    if (nextVal) {
+      playCardPullDownSound();
+    } else {
+      playCardPullUpSound();
     }
   };
 
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.stopPropagation();
+    playUiClick();
     navigator.clipboard.writeText(studentProfile.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -137,14 +121,14 @@ export const LanyardBadge: React.FC<LanyardBadgeProps> = ({
 
   if (initialLoading) {
     return (
-      <div id="academic-id" className="relative flex flex-col items-center w-full max-w-md mx-auto select-none pt-4 pb-12">
+      <div id="academic-id" className="relative flex flex-col items-center w-full max-w-md mx-auto select-none pt-1 sm:pt-2 pb-8 sm:pb-10 px-2 sm:px-0">
         <IdCardSkeleton statusMessage="Preparing Academic Credentials..." />
       </div>
     );
   }
 
   return (
-    <div id="academic-id" className="relative flex flex-col items-center w-full max-w-md mx-auto select-none pt-4 pb-12">
+    <div id="academic-id" className="relative flex flex-col items-center w-full max-w-md mx-auto select-none pt-1 sm:pt-2 pb-8 sm:pb-10 px-2 sm:px-0">
       {/* Hidden file input for photo customization */}
       <input
         type="file"
@@ -207,11 +191,14 @@ export const LanyardBadge: React.FC<LanyardBadgeProps> = ({
         dragConstraints={{ top: 0, bottom: isExpanded ? 0 : 160 }}
         dragElastic={0.25}
         dragSnapToOrigin={true}
+        onDragStart={() => playCardPullDownSound(0.08)}
         onDragEnd={(_, info) => {
           if (info.offset.y > 50 && !isExpanded) {
             toggleExpand(true);
           } else if (info.offset.y < -30 && isExpanded) {
             toggleExpand(false);
+          } else if (Math.abs(info.offset.y) > 15) {
+            playCardPullUpSound(0.12);
           }
         }}
         animate={{
@@ -223,7 +210,7 @@ export const LanyardBadge: React.FC<LanyardBadgeProps> = ({
           y: { type: 'spring', damping: 22, stiffness: 220 },
         }}
         id="hanging-student-id-card"
-        className="w-full max-w-[360px] sm:max-w-[390px] z-30 cursor-grab active:cursor-grabbing"
+        className="w-full max-w-[min(360px,calc(100vw-2.5rem))] sm:max-w-[390px] z-30 cursor-grab active:cursor-grabbing"
       >
         {/* ID Card Acrylic Outer Sleeve */}
         <div className="relative rounded-2xl bg-[#0d0d0d] border border-zinc-800 p-1 shadow-2xl shadow-black/80 backdrop-blur-xl transition-all duration-200 group hover:border-zinc-600">

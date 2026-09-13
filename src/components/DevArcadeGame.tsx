@@ -607,7 +607,7 @@ export const DevArcadeGame: React.FC<DevArcadeGameProps> = ({
       case 'theme':
         newHistory.push({
           type: 'output',
-          text: 'Tip: Use the top-right toggle in the navigation bar to switch between Deep Black & Slate Gray themes.',
+          text: 'Tip: Use the top-right toggle in the navigation bar to switch between Deep Black, Slate Gray, and Light Mode themes.',
         });
         break;
       default:

@@ -44,7 +44,7 @@ export interface StudentInfo {
   photoUrl: string;
 }
 
-export type ThemeMode = 'deep-black' | 'slate-gray';
+export type ThemeMode = 'deep-black' | 'slate-gray' | 'light';
 
 export interface ContactFormData {
   name: string;
