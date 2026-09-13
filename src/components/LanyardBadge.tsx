@@ -231,7 +231,6 @@ export const LanyardBadge: React.FC<LanyardBadgeProps> = ({
 
           {/* Card Inner Plastic Surface */}
           <div className="rounded-[14px] bg-[#000000] p-4 sm:p-5 border border-zinc-800/80 relative overflow-hidden text-left">
-            
             {/* College Header Section */}
             <div className="border-b border-zinc-800 pb-3 mb-4 text-center relative">
               <div className="flex items-center justify-between gap-2">
@@ -367,23 +366,57 @@ export const LanyardBadge: React.FC<LanyardBadgeProps> = ({
               </div>
             </div>
 
-            {/* Barcode Strip */}
-            <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between gap-2">
-              <div className="flex items-center gap-1 text-[9px] font-mono text-zinc-400">
-                <QrCode className="w-4 h-4 text-zinc-400" />
-                <span>PPU-GJC-2024-BCA-082</span>
+            {/* Card Footer: Barcode & Stylized Handwritten Digital Signature */}
+            <div className="pt-2.5 mt-1 border-t border-zinc-800/80 flex items-end justify-between gap-3 relative z-20">
+              {/* Barcode & Student ID token */}
+              <div className="space-y-1">
+                <div className="flex items-center gap-1 text-[9px] font-mono text-zinc-400">
+                  <QrCode className="w-3.5 h-3.5 text-zinc-400" />
+                  <span>PPU-GJC-2024-BCA-082</span>
+                </div>
+                {/* Simulated barcode bars */}
+                <div className="flex items-center gap-[2px] h-3.5 opacity-40">
+                  <div className="w-[1px] h-full bg-zinc-300" />
+                  <div className="w-[2px] h-full bg-zinc-300" />
+                  <div className="w-[1px] h-full bg-zinc-300" />
+                  <div className="w-[3px] h-full bg-zinc-300" />
+                  <div className="w-[1px] h-full bg-zinc-300" />
+                  <div className="w-[2px] h-full bg-zinc-300" />
+                  <div className="w-[1px] h-full bg-zinc-300" />
+                  <div className="w-[3px] h-full bg-zinc-300" />
+                  <div className="w-[2px] h-full bg-zinc-300" />
+                  <div className="w-[1px] h-full bg-zinc-300" />
+                  <div className="w-[2px] h-full bg-zinc-300" />
+                </div>
               </div>
-              {/* Simulated barcode bars */}
-              <div className="flex items-center gap-[2px] h-4 opacity-40">
-                <div className="w-[1px] h-full bg-zinc-300" />
-                <div className="w-[2px] h-full bg-zinc-300" />
-                <div className="w-[1px] h-full bg-zinc-300" />
-                <div className="w-[3px] h-full bg-zinc-300" />
-                <div className="w-[1px] h-full bg-zinc-300" />
-                <div className="w-[2px] h-full bg-zinc-300" />
-                <div className="w-[1px] h-full bg-zinc-300" />
-                <div className="w-[3px] h-full bg-zinc-300" />
-                <div className="w-[2px] h-full bg-zinc-300" />
+
+              {/* Bottom Right Corner: Stylized Handwritten Digital Signature */}
+              <div 
+                id="student-id-digital-signature"
+                className="flex flex-col items-end text-right select-none pr-0.5"
+              >
+                <div className="relative group/sig cursor-default">
+                  {/* Handwritten script signature */}
+                  <span 
+                    className="font-signature text-xl sm:text-2xl text-zinc-100 tracking-wide block -rotate-3 leading-none transition-transform duration-200 group-hover/sig:-rotate-1"
+                    style={{ fontFamily: "'Caveat', 'Dancing Script', cursive" }}
+                  >
+                    Aman Kumar
+                  </span>
+                  {/* Authentic SVG ink flourish pen stroke */}
+                  <svg 
+                    className="w-24 h-2 text-zinc-400/80 -mt-0.5 overflow-visible" 
+                    viewBox="0 0 100 8" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="1.3"
+                  >
+                    <path d="M2,5 Q26,1.5 54,5 T98,3.5" strokeLinecap="round" />
+                  </svg>
+                </div>
+                <span className="text-[8px] font-mono uppercase tracking-widest text-zinc-500 mt-0.5">
+                  Student Signature
+                </span>
               </div>
             </div>
 

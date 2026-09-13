@@ -7,6 +7,9 @@
   code, pre, .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
+  .font-signature {
+    font-family: 'Caveat', 'Dancing Script', 'Brush Script MT', cursive;
+  }
 }
 
 @layer utilities {
