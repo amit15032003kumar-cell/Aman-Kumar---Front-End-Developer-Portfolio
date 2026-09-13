@@ -77,15 +77,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           <span className="w-7 h-7 rounded-md bg-zinc-900 border border-zinc-700 flex items-center justify-center font-mono text-xs font-bold text-zinc-200">
             AK
           </span>
-          <div className="flex flex-col text-left">
-            <span className="text-sm font-semibold tracking-tight text-white leading-tight">
-              {studentProfile.name}
-            </span>
-            <span className="text-[11px] font-mono text-zinc-400 leading-none">
-              <span className="md:hidden lg:inline">G.J. College Bihta • BCA 2nd Yr</span>
-              <span className="hidden md:inline lg:hidden">G.J. College • BCA</span>
-            </span>
-          </div>
+          <span className="text-sm font-semibold tracking-tight text-white leading-tight">
+            {studentProfile.name}
+          </span>
         </a>
 
         {/* Tablet Nav (768px - 1023px): Streamlined 4-item pill dock */}
